@@ -3,19 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Automatas;
+package Excepciones;
 
 /**
- *
+ * Excepcion en caso de que una transicion no exista
  * @author juampa
  */
-public class AutomatasProyecto1 {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+public class TransicionNoExiste extends Exception {
+    public TransicionNoExiste(String msj){
+        super(msj);
     }
-    
 }
