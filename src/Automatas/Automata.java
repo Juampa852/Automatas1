@@ -17,7 +17,7 @@ public class Automata {
     //private Estado inicial=null;
     private ArrayList<Estado> estados=new ArrayList<Estado>();
     private boolean estInicial=false;
-    private int pocEstInicial;
+    private int pocEstInicial=-1;
     public Automata(Estado inicial) {}
     /**
      * Método para agregar símbolos al alfabeto del autómata
@@ -49,7 +49,7 @@ public class Automata {
         boolean existe=false;
         for (int i = 0; i < estados.size(); i++) {
             Estado temp=estados.get(i);
-            if (temp.nombre.equals(est.nombre)){
+            if (temp.getNombre().equals(est.getNombre())){
                 existe=true;
                 break;
             }
@@ -68,7 +68,7 @@ public class Automata {
         int poc=0;
         for (int i = 0; i < estados.size(); i++) {
             Estado temp=estados.get(i);
-            if (temp.nombre.equals(est.nombre)){
+            if (temp.getNombre().equals(est.getNombre())){
                 existe=true;
                 poc=i;
                 break;
@@ -87,7 +87,7 @@ public class Automata {
         boolean existe=false;
         for (int i = 0; i < estados.size(); i++) {
             Estado temp=estados.get(i);
-            if (temp.nombre.equals(nombreEst)){
+            if (temp.getNombre().equals(nombreEst)){
                 existe=true;
                 pocEstInicial=i;
                 estInicial=true;
@@ -103,5 +103,67 @@ public class Automata {
      */
     public boolean existeEstadoInicial(){
         return estInicial;
+    }
+    /**
+     * Obtiene la posición del estado inicial en el arreglo
+     * @return la posicion del estado
+     */
+    public int getPocEstadoInicial(){
+        return pocEstInicial;
+    }
+    /**
+     * Método para obtener la posición de un estado en el arreglo, por su nombre
+     * @param nombre nombre del estado que se solicita
+     * @return estado solicitado
+     * @throws EstadoNoExiste en caso de que ningun estado con ese nombre exista
+     */
+    public int getPocEstado(String nombre) throws EstadoNoExiste{
+        boolean existe=false;
+        int poc=0;
+        for (int i = 0; i < estados.size(); i++) {
+            Estado temp=estados.get(i);
+            if (temp.getNombre().equals(nombre)){
+                existe=true;
+                poc=i;
+                break;
+            }
+        }
+        if(!existe)
+            throw new EstadoNoExiste("Este estado no existe en el automata");
+        return poc;
+    }
+    /**
+     * Obtiene un estado en especifico, por su indice
+     * @param posicion posicion del estado a solicitar
+     * @return el estado solicitado
+     */
+    public Estado getEstado(int posicion){
+        return estados.get(posicion);
+    }
+    /**
+     * Obtiene un estado por su nombre
+     * @param nombre nombre del estado que se quiere obtener
+     * @return el estado solicitado
+     * @throws EstadoNoExiste en caso de que este estado no existiera
+     */
+    public Estado getEstado(String nombre) throws EstadoNoExiste{
+        boolean existe=false;
+        int poc=0;
+        for (int i = 0; i < estados.size(); i++) {
+            Estado temp=estados.get(i);
+            if (temp.getNombre().equals(nombre)){
+                existe=true;
+                poc=i;
+                break;
+            }
+        }
+        if(!existe)
+            throw new EstadoNoExiste("Este estado no existe en el automata");
+        return estados.get(poc);
+    }
+    public String getNombreEstado(int poc) throws EstadoNoExiste{
+        if(poc>(estados.size()-1))
+            throw new EstadoNoExiste("Este estado no existe en el autómata");
+        return estados.get(poc).getNombre();
     }
 }
