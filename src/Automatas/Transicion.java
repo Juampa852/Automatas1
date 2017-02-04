@@ -10,7 +10,16 @@ package Automatas;
  * @author juampa
  */
 public class Transicion {
-    char letra;
-    Estado siguiente;
+    private char letra;
+    private Estado siguiente;
+
+    public char getLetra() {
+        return letra;
+    }
+
+    public Estado getSiguiente() {
+        return siguiente;
+    }
+    
     
 }
