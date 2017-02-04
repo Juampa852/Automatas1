@@ -12,8 +12,21 @@ import java.util.ArrayList;
  * @author juampa
  */
 public class Estado {
-    String nombre;
-    boolean esFinal;
-    ArrayList<Transicion> transiciones=new ArrayList<Transicion>();
+    private String nombre;
+    private boolean esFinal;
+    private ArrayList<Transicion> transiciones=new ArrayList<Transicion>();
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public boolean isEsFinal() {
+        return esFinal;
+    }
+
+    public ArrayList<Transicion> getTransiciones() {
+        return transiciones;
+    }
+    
     
 }
