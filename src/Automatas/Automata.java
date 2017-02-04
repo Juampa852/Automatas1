@@ -18,7 +18,7 @@ public class Automata {
     private ArrayList<Estado> estados=new ArrayList<Estado>();
     private boolean estInicial=false;
     private int pocEstInicial=-1;
-    public Automata(Estado inicial) {}
+    public Automata() {}
     /**
      * Método para agregar símbolos al alfabeto del autómata
      * @param nuevo nuevo simbolo a agregar
