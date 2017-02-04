@@ -108,7 +108,7 @@ public class Automata {
      * Obtiene la posición del estado inicial en el arreglo
      * @return la posicion del estado
      */
-    public int getPocEstadoInicial(){
+    public int getPocEstadoInicial() {
         return pocEstInicial;
     }
     /**
@@ -136,8 +136,11 @@ public class Automata {
      * Obtiene un estado en especifico, por su indice
      * @param posicion posicion del estado a solicitar
      * @return el estado solicitado
+     * @throws Excepciones.EstadoNoExiste en caso de que no existira esa posicion en el array de estados
      */
-    public Estado getEstado(int posicion){
+    public Estado getEstado(int posicion) throws EstadoNoExiste{
+         if(posicion>(estados.size()-1))
+            throw new EstadoNoExiste("Este estado no existe en el autómata");
         return estados.get(posicion);
     }
     /**
@@ -161,6 +164,12 @@ public class Automata {
             throw new EstadoNoExiste("Este estado no existe en el automata");
         return estados.get(poc);
     }
+    /**
+     * Obtiene el nombre del estado en una posición en específico
+     * @param poc posicion del estado 
+     * @return nombre del estado
+     * @throws EstadoNoExiste en caso de que el estado no existira
+     */
     public String getNombreEstado(int poc) throws EstadoNoExiste{
         if(poc>(estados.size()-1))
             throw new EstadoNoExiste("Este estado no existe en el autómata");
