@@ -20,7 +20,7 @@ public class Estado {
         return nombre;
     }
 
-    public boolean isEsFinal() {
+    public boolean isFinal() {
         return esFinal;
     }
 
