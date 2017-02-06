@@ -44,7 +44,7 @@ public class Estado {
      * @throws TransicionYaExiste en caso de que la transicion con esta letra ya exista, se lanza una excepción
      */
     public void agregarTransicion (char tran) throws TransicionYaExiste{
-        if(buscarTransicion(tran)==-1)
+        if(buscarTransicion(tran)!=-1)
             throw new TransicionYaExiste("La transición con esta letra del alfabeto, ya existe en este estado");
         Transicion nuevo=new Transicion(tran);
         transiciones.add(nuevo);
