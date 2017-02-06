@@ -185,7 +185,7 @@ public class Automata {
         Estado est=estados.get(pocEstInicial);
         while(cont<cadena.length()){
             char letra=cadena.charAt(cont);
-            est=estados.get(buscarEstado(est.cambiarDeEstado(letra).getNombre()));
+            est=estados.get(buscarEstado(est.cambiarDeEstado(letra)));
             cont++;
         }
         if(est.isFinal())

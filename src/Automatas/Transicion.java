@@ -11,7 +11,16 @@ package Automatas;
  */
 public class Transicion {
     private char letra;
-    private Estado siguiente;
+    private String siguiente;
+    /**
+     * Constructor que define la transición, con el nombre del estado al que lleva
+     * @param siguiente estado al que lleva
+     * @param letra letra con la cual ejecuta la transición
+     */
+    public Transicion(String siguiente, char letra){
+        this.siguiente=siguiente;
+        this.letra=letra;
+    }
     /**
      * Constructor de la transicion
      * @param letra la letra con la cual cambia de estado
@@ -30,14 +39,14 @@ public class Transicion {
      * Obtiene el estado al cual se cambia con esta transición (con la letra de esta transicion)
      * @return estado al cual se cambia
      */
-    public Estado getSiguiente() {
+    public String getSiguiente() {
         return siguiente;
     }
     /**
      * Establece cual es el estado siguiente al cual se cambia
      * @param est estado al cual se cambia
      */
-    public void setSiguiente(Estado est){
+    public void setSiguiente(String est){
         this.siguiente=est;
     }
     

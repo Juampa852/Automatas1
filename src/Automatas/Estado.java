@@ -86,9 +86,10 @@ public class Estado {
      * @param letra letra del alfabeto con la cual se cambia
      * @return el estado al que se traslada
      */
-    public Estado cambiarDeEstado(char letra){
+    public String cambiarDeEstado(char letra){
         Transicion tran = transiciones.get(buscarTransicion(letra));
-        return tran.getSiguiente();
+        return  tran.getSiguiente();
+        
     }
     /**
      * Cambia el nombre del estado
