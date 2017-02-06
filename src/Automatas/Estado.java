@@ -15,7 +15,14 @@ public class Estado {
     private String nombre;
     private boolean esFinal;
     private ArrayList<Transicion> transiciones=new ArrayList<Transicion>();
-    public Estado(){}    
+    public Estado(){}
+    /**
+     * Constructor del estado
+     * @param nombre nombre del nuevo estado
+     */
+    public Estado(String nombre){
+        this.nombre=nombre;
+    }    
     /**
      * Método para buscar una transicion en el automata, segun la letra que usa para cambiar de estado
      * @param letra la letra con la se "ejecuta" la transicion
@@ -82,5 +89,12 @@ public class Estado {
     public Estado cambiarDeEstado(char letra){
         Transicion tran = transiciones.get(buscarTransicion(letra));
         return tran.getSiguiente();
+    }
+    /**
+     * Cambia el nombre del estado
+     * @param nombre nombre nuevo del estado 
+     */
+    public void setNombre(String nombre){
+        this.nombre=nombre;
     }
 }
