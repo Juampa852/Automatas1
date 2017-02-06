@@ -5,17 +5,33 @@
  */
 package Automatas;
 
+import Excepciones.EstadoNoExiste;
+import Excepciones.EstadoYaExiste;
+import Excepciones.SimboloYaExiste;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author juampa
  */
 public class Ventana1 extends javax.swing.JFrame {
-
+    Automata auto=new Automata();
     /**
      * Creates new form Ventana1
      */
     public Ventana1() {
         initComponents();
+        try {   
+            Estado est=new Estado("q0");
+            auto.agregarSimbolo("1");
+            auto.agregarSimbolo("0");
+            auto.agregarEstado(est);
+            auto.marcarEstadoInicial(est.getNombre());
+            Dibujar d=new Dibujar(auto);
+        } catch (EstadoYaExiste | SimboloYaExiste | EstadoNoExiste ex) {
+            Logger.getLogger(Ventana1.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
