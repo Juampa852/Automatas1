@@ -20,13 +20,16 @@ import javax.swing.JPanel;
 public class Dibujar extends JPanel{
     JFrame ventana= new JFrame("Automata");//Se crea un nuevo frame
     Automata automataPrueba=new Automata();
-    
-    public Dibujar(int x, int y)//COnstructor de la clase que recibe el alto y ancho del lienzo
+    /**
+     * Constructor de la clase que dibuja el automata
+     * @param auto automata a dibujar
+     */
+    public Dibujar(Automata auto)
     {
-        ventana.setSize(x, y);//Setea el tamaño del lienzo
+        ventana.setSize(300, 300);//Setea el tamaño del lienzo
         ventana.setVisible(true);//Hace visible todo el frame
         ventana.add(this);//Añade el lienzo al frame
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//Define el boton cerrar como boton para finalizar el programa
+        
     }
     @Override
     public void paint(Graphics g)//Sobreescritura del metodo paint
@@ -35,9 +38,19 @@ public class Dibujar extends JPanel{
         this.repaint();
         Graphics2D g2d= (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.drawOval(this.getWidth()/10,this.getWidth()/10,this.getWidth()/10,this.getWidth()/10);
+        int menor;
+        if(this.getWidth()<this.getHeight())
+            menor=this.getWidth();
+        else 
+            menor=this.getHeight();
+        g2d.drawOval(this.getWidth()/10,this.getHeight()/2-menor/4,menor/2,menor/2);
     }
-    public void actualizar(){
-        
+    private class estadoG extends Estado{
+        int x, y;
+        public estadoG(Estado est, int x, int y)
+        {
+            this.x=x;
+            this.y=y;
+        }
     }
 }
