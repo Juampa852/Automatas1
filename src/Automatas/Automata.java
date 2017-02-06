@@ -175,4 +175,39 @@ public class Automata {
             throw new EstadoNoExiste("Este estado no existe en el autómata");
         return estados.get(poc).getNombre();
     }
+    /**
+     * Método para que el autómata valide o no una cadena
+     * @param cadena cadena a validar
+     * @return true si la cadena pertenece al lenguaje, false si no
+     */
+    public boolean comprobarCadena(String cadena){
+        int cont=0;
+        Estado est=estados.get(pocEstInicial);
+        while(cont<cadena.length()){
+            char letra=cadena.charAt(cont);
+            est=estados.get(buscarEstado(est.cambiarDeEstado(letra).getNombre()));
+            cont++;
+        }
+        if(est.isFinal())
+            return true;
+        else
+            return false;
+    }
+    /**
+     * Busca estados por su nombre
+     * @param nombre nombre del estado a buscar
+     * @return posicion en el arreglo de estados del que se busca, si no existe devuelve "-1"
+     */
+    private int buscarEstado(String nombre){
+        int poc=-1;
+        for (int i = 0; i < estados.size(); i++) {
+            Estado temp=estados.get(i);
+            if (temp.getNombre().equals(nombre)){
+                poc=i;
+                break;
+            }
+        }
+        return poc;
+    }
+    
 }

@@ -8,14 +8,21 @@ import Excepciones.*;
 import java.util.ArrayList;
 
 /**
- *
+ * Clase para controlar las caracteristicas del estado de un automata
  * @author juampa
  */
 public class Estado {
     private String nombre;
     private boolean esFinal;
     private ArrayList<Transicion> transiciones=new ArrayList<Transicion>();
-    public Estado(){}    
+    public Estado(){}
+    /**
+     * Constructor del estado
+     * @param nombre nombre del nuevo estado
+     */
+    public Estado(String nombre){
+        this.nombre=nombre;
+    }    
     /**
      * Método para buscar una transicion en el automata, segun la letra que usa para cambiar de estado
      * @param letra la letra con la se "ejecuta" la transicion
@@ -74,6 +81,20 @@ public class Estado {
     public ArrayList<Transicion> getTransiciones() {
         return transiciones;
     }
-    
-    
+    /**
+     * Método para saber a que estado se cambia, con una letra del alfabeto
+     * @param letra letra del alfabeto con la cual se cambia
+     * @return el estado al que se traslada
+     */
+    public Estado cambiarDeEstado(char letra){
+        Transicion tran = transiciones.get(buscarTransicion(letra));
+        return tran.getSiguiente();
+    }
+    /**
+     * Cambia el nombre del estado
+     * @param nombre nombre nuevo del estado 
+     */
+    public void setNombre(String nombre){
+        this.nombre=nombre;
+    }
 }
