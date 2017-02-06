@@ -6,7 +6,7 @@
 package Automatas;
 
 /**
- *
+ * Clase para controlar las propiedades de las transiciones de un estado
  * @author juampa
  */
 public class Transicion {

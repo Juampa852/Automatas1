@@ -8,7 +8,7 @@ import Excepciones.*;
 import java.util.ArrayList;
 
 /**
- *
+ * Clase para controlar las caracteristicas del estado de un automata
  * @author juampa
  */
 public class Estado {
@@ -74,6 +74,11 @@ public class Estado {
     public ArrayList<Transicion> getTransiciones() {
         return transiciones;
     }
+    /**
+     * Método para saber a que estado se cambia, con una letra del alfabeto
+     * @param letra letra del alfabeto con la cual se cambia
+     * @return el estado al que se traslada
+     */
     public Estado cambiarDeEstado(char letra){
         Transicion tran = transiciones.get(buscarTransicion(letra));
         return tran.getSiguiente();
