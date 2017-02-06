@@ -175,4 +175,29 @@ public class Automata {
             throw new EstadoNoExiste("Este estado no existe en el autómata");
         return estados.get(poc).getNombre();
     }
+    public boolean comprobarCadena(String cadena){
+        int cont=0;
+        Estado est=estados.get(pocEstInicial);
+        while(cont<cadena.length()){
+            char letra=cadena.charAt(cont);
+            est=estados.get(buscarEstado(est.cambiarDeEstado(letra).getNombre()));
+            cont++;
+        }
+        if(est.isFinal())
+            return true;
+        else
+            return false;
+    }
+    private int buscarEstado(String nombre){
+        int poc=-1;
+        for (int i = 0; i < estados.size(); i++) {
+            Estado temp=estados.get(i);
+            if (temp.getNombre().equals(nombre)){
+                poc=i;
+                break;
+            }
+        }
+        return poc;
+    }
+    
 }

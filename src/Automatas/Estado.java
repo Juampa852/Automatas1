@@ -74,6 +74,8 @@ public class Estado {
     public ArrayList<Transicion> getTransiciones() {
         return transiciones;
     }
-    
-    
+    public Estado cambiarDeEstado(char letra){
+        Transicion tran = transiciones.get(buscarTransicion(letra));
+        return tran.getSiguiente();
+    }
 }
