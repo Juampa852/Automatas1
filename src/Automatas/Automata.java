@@ -30,6 +30,13 @@ public class Automata {
         lenguaje.add(nuevo);
     }
     /**
+     * Funcion que retorna el numero de estados del automata
+     * @return entero con la longitud del array de estados en el automata
+     */
+    public int noEstados(){
+        return estados.size();
+    }
+    /**
      * Método para eliminar símbolos del alfabeto
      * @param viejo símbolo a eliminar del alfabeto
      * @throws SimboloNoExiste en caso de que no existiera, no se hace cambios
