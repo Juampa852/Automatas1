@@ -24,6 +24,15 @@ public class Estado {
         this.nombre=nombre;
     }    
     /**
+     * Constructor del estado
+     * @param nombre nombre del nuevo estado
+     * @param marcaFinal marca si el estado es final o no
+     */
+    public Estado(String nombre, boolean marcaFinal){
+        this.nombre=nombre;
+        this.esFinal=marcaFinal;
+    }    
+    /**
      * Método para buscar una transicion en el automata, segun la letra que usa para cambiar de estado
      * @param letra la letra con la se "ejecuta" la transicion
      * @return retorna "-1" si no se ha encontrado la transicion, de lo contrario devuelve la posicion en el array de la transicion buscada
@@ -97,5 +106,12 @@ public class Estado {
      */
     public void setNombre(String nombre){
         this.nombre=nombre;
+    }
+    /**
+     * Marca el estado como final
+     * @param cambio se manda un true si el estado quiere marcarse como final, false de lo contrario
+     */
+    public void setFinal(boolean cambio){
+        this.esFinal=cambio;
     }
 }
