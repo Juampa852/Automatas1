@@ -8,13 +8,10 @@ package Automatas;
 import Excepciones.EstadoNoExiste;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Label;
-import java.awt.Point;
 import java.awt.RenderingHints;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**Clase que hereda de JPanel
@@ -34,23 +31,44 @@ public class Dibujar extends JPanel{
     public Dibujar(Automata auto) throws EstadoNoExiste
     {
               
-            automataPrueba=auto;
-            ventana.setSize(400, 300);//Setea el tamaño del lienzo
-            ventana.setVisible(true);//Hace visible todo el frame
-            ventana.add(this);//Añade el lienzo al frame
+            automataPrueba=auto; 
             int i=auto.getPocEstadoInicial();
             if(i>-1)
             {
-                estadoG ini= new estadoG(auto.getEstado(auto.getPocEstadoInicial()),100, 100);
+                estadoG ini= new estadoG(auto.getEstado(auto.getPocEstadoInicial()),80, 80);
                 estadoG est;
                 estados.add(ini);
                 for(int o=0;o<auto.noEstados();o++)
                 {
-                    est = new estadoG(auto.getEstado(o),50*o+100, 100);
+                    est = new estadoG(auto.getEstado(o),150*o+80, 80);
                     if(!ini.est.getNombre().equals(est.est.getNombre()))
-                        estados.add(ini);
+                        estados.add(est);
                 }
             }
+            calcularDimensiones();
+            ventana.setVisible(true);//Hace visible todo el frame
+            ventana.add(this);//Añade el lienzo al frame
+    }
+    /**
+     * Método que genera las dimensiones de la ventana dependiendo del numero de estados
+     * Este mpetodo busca que las dimensiones permitan dibujar los estados como una matriz cuadrada
+     * utilizando el cuadrado entero superior, por ejemplo, si existen 7 estados, se acomodan en una matriz de 3x3 (9)
+     */
+    public void calcularDimensiones()
+    {
+        int cuadrado=1;
+        while(Math.pow(cuadrado, 2)<estados.size())
+        {
+            cuadrado++;
+        }
+        int x=cuadrado, y=1;
+        while(y*x<estados.size())
+        {
+            y++;
+        }
+        x=(x+2)*100;
+        y=(y+2)*100;
+        ventana.setSize(x,y);
     }
     @Override
     public void paint(Graphics g)
@@ -74,15 +92,12 @@ public class Dibujar extends JPanel{
         if(posicion==0)
         {
             g2d.drawLine(estG.x-30,estG.y+20, estG.x,estG.y+50);
-            g2d.drawLine(estG.x-30,estG.y+80, estG.x,estG.y+50);
-            g2d.drawOval(estG.x,estG.y,100,100);
-            if(estG.est.isFinal())
+            g2d.drawLine(estG.x-30,estG.y+80, estG.x,estG.y+50);             
+        }
+        g2d.drawOval(estG.x,estG.y,100,100);   
+        if(estG.est.isFinal())
                 g2d.drawOval(estG.x+10,estG.y+10,80,80);
             g2d.drawChars(estG.est.getNombre().toCharArray(), 0,estG.est.getNombre().length() ,estG.x+50,estG.y+50);
-                
-        }
-            
-        
     }
     /**
      * Clase estado grafico, es una clase interna de la clase Dibujar
