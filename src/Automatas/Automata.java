@@ -72,7 +72,7 @@ public class Automata {
      */
     public void eliminarEstado(Estado est) throws EstadoNoExiste{
         boolean existe=false;
-        int poc=0;
+        int poc=-1;
         for (int i = 0; i < estados.size(); i++) {
             Estado temp=estados.get(i);
             if (temp.getNombre().equals(est.getNombre())){

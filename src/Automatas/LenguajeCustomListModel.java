@@ -12,15 +12,8 @@ import javax.swing.AbstractListModel;
  * Clase para manejo de Transiciones por medio de JLists
  * @author juampa
  */
-public class TransicionesCustomListModel extends AbstractListModel {
-    private ArrayList<Transicion> lista = new ArrayList<>();
-    /**
-     * Método para cambiar un estado, y cargar sus transiciones a la lista
-     * @param seleccion estado nuevo del que se desea obtener las transiciones
-     */
-    public void cambiarEstado(Estado seleccion){
-        this.lista=seleccion.getTransiciones();
-    }
+public class LenguajeCustomListModel extends AbstractListModel {
+    private ArrayList<String> lista = new ArrayList<>();
     /**
      * Método por defecto heredado. Obtiene el número de objetos en la lista
      * @return numero de posiciones en el arreglo
@@ -36,13 +29,13 @@ public class TransicionesCustomListModel extends AbstractListModel {
      */
     @Override
     public Object getElementAt(int index) {
-        return lista.get(index).getLetra();
+        return lista.get(index);
     }
     /**
      * Agrega un nuevo elemento a la lista
      * @param p el elemento a agregar
      */
-    public void addTransicion(Transicion p){
+    public void addSimbolo(String p){
         lista.add(p);
         this.fireIntervalAdded(this, getSize(), getSize()+1);
     }
@@ -50,7 +43,7 @@ public class TransicionesCustomListModel extends AbstractListModel {
      * Elimina un elemento de la lista, especificando su indice
      * @param index0 el indice del elemento a borrar
      */
-    public void eliminarTransicion(int index0){
+    public void eliminarSimbolo(int index0){
         lista.remove(index0);
         this.fireIntervalRemoved(index0, getSize(), getSize()+1);
     }
@@ -59,7 +52,7 @@ public class TransicionesCustomListModel extends AbstractListModel {
      * @param index indice del elemento
      * @return el elemento que se desea
      */
-    public Transicion getTransicion(int index){
+    public String getSimbolo(int index){
         return lista.get(index);
     }
 }
