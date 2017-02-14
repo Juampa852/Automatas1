@@ -10,8 +10,8 @@ package Automatas;
  * @author juampa
  */
 public class Transicion {
-    private char letra;
-    private String siguiente;
+    private char letra=' ';
+    private String siguiente="";
     /**
      * Constructor que define la transición, con el nombre del estado al que lleva
      * @param siguiente estado al que lleva
