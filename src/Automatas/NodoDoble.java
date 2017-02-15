@@ -10,7 +10,8 @@ package Automatas;
  * @author Lenovo
  */
 public class NodoDoble {
-    private int dato;
+    private String dato;
+    private String dato2;
  private NodoDoble anterior;
  private NodoDoble siguiente;
 
@@ -19,14 +20,24 @@ public class NodoDoble {
         siguiente=null;
     }
 
-    public NodoDoble(int dato, NodoDoble anterior, NodoDoble siguiente) {
+    public NodoDoble(String dato,String dato2,NodoDoble anterior, NodoDoble siguiente) {
         this.dato = dato;
+        this.dato2=dato2;
         this.anterior = anterior;
         this.siguiente = siguiente;
     }
  
-    public int getDato(){
+    public String getDato(){
         return dato;
+    }
+
+    public String getDato2() {
+        return dato2;
+    }
+    
+
+    public NodoDoble(String dato2) {
+        this.dato2 = dato2;
     }
     
     public NodoDoble getAnterior(){
@@ -37,8 +48,9 @@ public class NodoDoble {
         return siguiente;
     }
 
-    public void setDato(int dato) {
+    public void setDato(String dato) {
         this.dato = dato;
+       
     }
 
     public void setAnterior(NodoDoble anterior) {
@@ -50,7 +62,7 @@ public class NodoDoble {
     }
     @Override
     public String toString() {
-        return "" + dato;
+        return "" + dato+ dato2;
     }
     
 }

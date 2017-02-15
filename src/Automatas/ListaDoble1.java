@@ -20,19 +20,19 @@ public class ListaDoble1 {
         fin.setAnterior(inicio); 
 }
     
-    public void agregarAlInicio (int dato){
-        NodoDoble nuevo =new NodoDoble(dato,inicio,inicio.getSiguiente());
+    public void agregarAlInicio (String dato,String dato2){
+        NodoDoble nuevo =new NodoDoble(dato,dato2,inicio,inicio.getSiguiente());
         inicio.setSiguiente(nuevo);
         nuevo.getSiguiente().setAnterior(nuevo);
         tamano++;
     }
-    public void InsertarAlfinal(int dato){
-        NodoDoble nuevo = new NodoDoble(dato,fin.getAnterior(),fin);
+    public void InsertarAlfinal(String dato, String dato2){
+        NodoDoble nuevo = new NodoDoble(dato,dato2,fin.getAnterior(),fin);
         fin.setAnterior(nuevo);
         nuevo.getAnterior().setSiguiente(nuevo);
         tamano++;
     }
-    public int eliminarAlIncio()throws ExcepcionesListaVacia{
+    public String eliminarAlIncio()throws ExcepcionesListaVacia{
         if(tamano==0)
             throw new ExcepcionesListaVacia("La lista está vacía");
         NodoDoble borrar= inicio.getSiguiente();
@@ -48,17 +48,29 @@ public class ListaDoble1 {
         
         if(tamano==0)
             throw new ExcepcionesListaVacia("Lista Vacía");
-        int dato =fin.getAnterior().getDato();
-        NodoDoble borrar=fin.getAnterior();
-        fin.setAnterior((borrar.getAnterior()));
-        p=Integer.parseInt(borrar.toString());
-        borrar.getAnterior().setSiguiente(fin);
-        borrar.setAnterior(null);
-        borrar.setSiguiente(null);
-        tamano--;
+            String dato =fin.getAnterior().getDato();
+            NodoDoble borrar=fin.getAnterior();
+            fin.setAnterior((borrar.getAnterior()));
+            p=Integer.parseInt(borrar.toString());
+            borrar.getAnterior().setSiguiente(fin);
+            borrar.setAnterior(null);
+            borrar.setSiguiente(null);
+            tamano--;
         return p;
     }
-
+     public boolean buscar(String valor, String valor1){
+        NodoDoble aux = inicio;
+        
+        while ((aux!= null)){
+            if((aux.getDato().equals(valor))&&(aux.getDato2().equals(valor1))){
+                return true;
+            }
+              aux= aux.getSiguiente();
+        }
+      return false;
+    }
+   
+        
     @Override
     public String toString() {
         String a ="";
