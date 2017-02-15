@@ -34,7 +34,7 @@ public class Ventana1 extends javax.swing.JFrame {
         listaLenguaje.setModel(lenguaje);
         listaEstados1.setModel(estados);
         listaTransiciones1.setModel(transiciones);
-        listaEstTransiciones1.setModel(estados);
+        //listaEstTransiciones1.setModel(estados);
         listaTransiciones1.setModel(lenguaje);
         automataPanel1.setVisible(false);
     }
