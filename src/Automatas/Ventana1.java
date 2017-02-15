@@ -34,6 +34,8 @@ public class Ventana1 extends javax.swing.JFrame {
         listaLenguaje.setModel(lenguaje);
         listaEstados1.setModel(estados);
         listaTransiciones1.setModel(transiciones);
+        listaEstTransiciones1.setModel(estados);
+        listaTransiciones1.setModel(lenguaje);
         automataPanel1.setVisible(false);
     }
 
@@ -63,12 +65,13 @@ public class Ventana1 extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         estadosInButton1 = new javax.swing.JButton();
         estadosErButton1 = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        finalCheck1 = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         listaEstTransiciones1 = new javax.swing.JList<>();
         jLabel5 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Automatas");
@@ -76,6 +79,7 @@ public class Ventana1 extends javax.swing.JFrame {
 
         jLabel1.setText("Ingresar:");
 
+        lenguajeField.setNextFocusableComponent(ingresarLenguajeButton);
         lenguajeField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 lenguajeFieldKeyReleased(evt);
@@ -83,12 +87,14 @@ public class Ventana1 extends javax.swing.JFrame {
         });
 
         ingresarLenguajeButton.setText("Ingresar");
+        ingresarLenguajeButton.setNextFocusableComponent(listaLenguaje);
         ingresarLenguajeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ingresarLenguajeButtonActionPerformed(evt);
             }
         });
 
+        listaLenguaje.setNextFocusableComponent(eliminarLenguajeButton);
         listaLenguaje.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 listaLenguajeValueChanged(evt);
@@ -97,6 +103,7 @@ public class Ventana1 extends javax.swing.JFrame {
         jScrollPane2.setViewportView(listaLenguaje);
 
         eliminarLenguajeButton.setText("Eliminar Seleccionado");
+        eliminarLenguajeButton.setNextFocusableComponent(lengTerminadoButton);
         eliminarLenguajeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eliminarLenguajeButtonActionPerformed(evt);
@@ -104,6 +111,7 @@ public class Ventana1 extends javax.swing.JFrame {
         });
 
         lengTerminadoButton.setText("Terminado");
+        lengTerminadoButton.setNextFocusableComponent(lenguajeField);
         lengTerminadoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lengTerminadoButtonActionPerformed(evt);
@@ -164,9 +172,17 @@ public class Ventana1 extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(listaTransiciones1);
 
+        estadosField1.setNextFocusableComponent(finalCheck1);
+        estadosField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                estadosField1KeyReleased(evt);
+            }
+        });
+
         jLabel2.setText("Nombre:");
 
         estadosInButton1.setText("Ingresar");
+        estadosInButton1.setNextFocusableComponent(estadosErButton1);
         estadosInButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 estadosInButton1ActionPerformed(evt);
@@ -174,13 +190,20 @@ public class Ventana1 extends javax.swing.JFrame {
         });
 
         estadosErButton1.setText("Eliminar Seleccionado");
+        estadosErButton1.setNextFocusableComponent(estadosField1);
         estadosErButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 estadosErButton1ActionPerformed(evt);
             }
         });
 
-        jCheckBox1.setText("Final");
+        finalCheck1.setText("Final");
+        finalCheck1.setNextFocusableComponent(estadosInButton1);
+        finalCheck1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                finalCheck1KeyReleased(evt);
+            }
+        });
 
         jLabel3.setText("Transiciones:");
 
@@ -195,11 +218,13 @@ public class Ventana1 extends javax.swing.JFrame {
 
         jLabel5.setText("Estados:");
 
+        jButton1.setText("Aceptar");
+
         javax.swing.GroupLayout automataPanel1Layout = new javax.swing.GroupLayout(automataPanel1);
         automataPanel1.setLayout(automataPanel1Layout);
         automataPanel1Layout.setHorizontalGroup(
             automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, automataPanel1Layout.createSequentialGroup()
+            .addGroup(automataPanel1Layout.createSequentialGroup()
                 .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(estadosErButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -208,7 +233,7 @@ public class Ventana1 extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox1)
+                            .addComponent(finalCheck1)
                             .addComponent(estadosField1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
@@ -220,9 +245,14 @@ public class Ventana1 extends javax.swing.JFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(344, Short.MAX_VALUE))
+                .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(automataPanel1Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jButton1))
+                    .addGroup(automataPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         automataPanel1Layout.setVerticalGroup(
             automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,12 +269,14 @@ public class Ventana1 extends javax.swing.JFrame {
                             .addComponent(estadosField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox1)
+                        .addComponent(finalCheck1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(estadosInButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(estadosErButton1)))
-                .addGap(0, 47, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addGap(0, 18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -265,10 +297,10 @@ public class Ventana1 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(automataPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(237, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(1104, 261));
+        setSize(new java.awt.Dimension(1044, 480));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -363,8 +395,22 @@ public class Ventana1 extends javax.swing.JFrame {
     }//GEN-LAST:event_listaEstTransiciones1ValueChanged
 
     private void estadosInButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadosInButton1ActionPerformed
-        // TODO add your handling code here:
+        ingresarEst1();
     }//GEN-LAST:event_estadosInButton1ActionPerformed
+
+    private void estadosField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_estadosField1KeyReleased
+        int tecla=evt.getKeyCode();
+        if(tecla==10){
+            ingresarEst1();
+        }
+    }//GEN-LAST:event_estadosField1KeyReleased
+
+    private void finalCheck1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_finalCheck1KeyReleased
+        int tecla=evt.getKeyCode();
+        if(tecla==10){
+            ingresarEst1();
+        }
+    }//GEN-LAST:event_finalCheck1KeyReleased
     /**
      * Ingresa símbolos al lenguaje
      */
@@ -373,12 +419,33 @@ public class Ventana1 extends javax.swing.JFrame {
             try {
                 automata1.agregarSimbolo(lenguajeField.getText().trim());
                 lenguaje.addSimbolo(lenguajeField.getText().trim());
+                lenguajeField.setText("");
+                lenguajeField.requestFocus();
             } catch (SimboloYaExiste ex) {
                 JOptionPane.showMessageDialog(null, ex.toString());
+                lenguajeField.selectAll();
+                lenguajeField.requestFocus();
             }
-            lenguajeField.setText("");
-            lenguajeField.requestFocus();
+            
         }
+    }
+    
+    private void ingresarEst1(){
+        if(!(estadosField1.getText().trim().equals(""))){
+            try {
+                Estado nuevo= new Estado(estadosField1.getText().trim(), finalCheck1.isSelected());
+                automata1.agregarEstado(nuevo);
+                estados.addEstado(nuevo);
+                estadosField1.setText("");
+                finalCheck1.setSelected(false);
+                estadosField1.requestFocus();
+            } catch (EstadoYaExiste ex) {
+                JOptionPane.showMessageDialog(null, ex.toString());
+                estadosField1.selectAll();
+                estadosField1.requestFocus();
+            }
+        }
+        
     }
     /**
      * @param args the command line arguments
@@ -421,8 +488,9 @@ public class Ventana1 extends javax.swing.JFrame {
     private javax.swing.JButton estadosErButton1;
     private javax.swing.JTextField estadosField1;
     private javax.swing.JButton estadosInButton1;
+    private javax.swing.JCheckBox finalCheck1;
     private javax.swing.JButton ingresarLenguajeButton;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

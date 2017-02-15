@@ -78,6 +78,7 @@ public class Automata {
      * @throws EstadoNoExiste si no hay ningun estado con este nombre, no se elimina nada
      */
     public void eliminarEstado(Estado est) throws EstadoNoExiste{
+        String nombreBorrar=est.getNombre();
         boolean existe=false;
         int poc=-1;
         for (int i = 0; i < estados.size(); i++) {
@@ -91,6 +92,16 @@ public class Automata {
         if(!existe)
             throw new EstadoNoExiste("Este estado no existe en el automata");
         estados.remove(poc);
+        Estado temp;
+        for (int i = 0; i < estados.size(); i++) {
+            temp=estados.get(i);
+            for (int j = 0; j < 10; j++) {
+                Transicion tran=temp.getTransiciones().get(j);
+                if(tran.getSiguiente().equals(nombreBorrar)){
+                    estados.get(i).getTransiciones().get(j).setSiguiente(Transicion.ESTADO_SIGUIENTE_VACIO);
+                }
+            }
+        }
     }
     /**
      * Método para marcar el estado inicial del autómata, y establecer su posición
