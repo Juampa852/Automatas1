@@ -32,8 +32,11 @@ public class Dibujar extends JPanel{
     public Dibujar(Automata auto) throws EstadoNoExiste
     { 
             actualizar(auto);
-            ventana.add(this);//Añade el lienzo al frame
-            ventana.setVisible(true);//Hace visible todo el frame    
+            if(auto.getPocEstadoInicial()<0)
+            {
+                ventana.add(this);//Añade el lienzo al frame
+                ventana.setVisible(true);//Hace visible todo el frame
+            }
     }
     /**
      * metodo para actualizar el dibujo del automata
@@ -70,10 +73,11 @@ public class Dibujar extends JPanel{
                         }
                     }
                 }
+                calcularDimensiones();
+                this.setBackground(Color.white);
+                repaint();
             }
-            calcularDimensiones();
-            this.setBackground(Color.white);
-            repaint();
+            
     }
     /**
      * Método que genera las dimensiones de la ventana dependiendo del numero de estados
