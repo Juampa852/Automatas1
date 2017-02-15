@@ -68,10 +68,9 @@ public class Ventana1 extends javax.swing.JFrame {
         finalCheck1 = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        listaEstTransiciones1 = new javax.swing.JList<>();
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        transicionesVoid1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Automatas");
@@ -209,13 +208,6 @@ public class Ventana1 extends javax.swing.JFrame {
 
         jLabel4.setText("Va a:");
 
-        listaEstTransiciones1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                listaEstTransiciones1ValueChanged(evt);
-            }
-        });
-        jScrollPane4.setViewportView(listaEstTransiciones1);
-
         jLabel5.setText("Estados:");
 
         jButton1.setText("Aceptar");
@@ -248,18 +240,20 @@ public class Ventana1 extends javax.swing.JFrame {
                 .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(automataPanel1Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addComponent(jButton1))
+                        .addComponent(jButton1)
+                        .addContainerGap(40, Short.MAX_VALUE))
                     .addGroup(automataPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                        .addComponent(transicionesVoid1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         automataPanel1Layout.setVerticalGroup(
             automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(automataPanel1Layout.createSequentialGroup()
                 .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
+                    .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(transicionesVoid1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel3)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -287,7 +281,7 @@ public class Ventana1 extends javax.swing.JFrame {
                 .addComponent(lenguajePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(automataPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -389,10 +383,6 @@ public class Ventana1 extends javax.swing.JFrame {
     private void estadosErButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadosErButton1ActionPerformed
         
     }//GEN-LAST:event_estadosErButton1ActionPerformed
-
-    private void listaEstTransiciones1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaEstTransiciones1ValueChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_listaEstTransiciones1ValueChanged
 
     private void estadosInButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadosInButton1ActionPerformed
         ingresarEst1();
@@ -499,13 +489,12 @@ public class Ventana1 extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JButton lengTerminadoButton;
     private javax.swing.JTextField lenguajeField;
     private javax.swing.JPanel lenguajePanel;
-    private javax.swing.JList<String> listaEstTransiciones1;
     private javax.swing.JList<String> listaEstados1;
     private javax.swing.JList<String> listaLenguaje;
     private javax.swing.JList<String> listaTransiciones1;
+    private javax.swing.JComboBox<String> transicionesVoid1;
     // End of variables declaration//GEN-END:variables
 }
