@@ -20,6 +20,7 @@ public class Equivalencias {
             if (auto1.getEstado(0).isFinal()==auto2.getEstado(0).isFinal()) {
                 for (int i = 0; i < auto1.getLenguaje().size(); i++) {
                     EstadosHijos(auto1.getEstado(0).getTransiciones(i),auto2.getEstado(0).getTransiciones(i));
+                    
                 }
                             }
         } catch (EstadoNoExiste ex) {
