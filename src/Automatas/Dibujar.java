@@ -73,6 +73,7 @@ public class Dibujar extends JPanel{
             }
             calcularDimensiones();
             this.setBackground(Color.white);
+            repaint();
     }
     /**
      * Método que genera las dimensiones de la ventana dependiendo del numero de estados
@@ -165,6 +166,8 @@ public class Dibujar extends JPanel{
     }
     private Color asignarColor(int posicion)
     {
+        while(posicion>9)
+            posicion=posicion-9;
         switch (posicion) {
             case 1:
                 return Color.BLACK;
