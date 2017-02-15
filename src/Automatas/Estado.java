@@ -12,9 +12,9 @@ import java.util.ArrayList;
  * @author juampa
  */
 public class Estado {
-    private String nombre;
-    private boolean esFinal;
-    private ArrayList<Transicion> transiciones=new ArrayList<Transicion>();
+    private String nombre="";
+    private boolean esFinal=false;
+    private ArrayList<Transicion> transiciones=new ArrayList<>();
     public Estado(){}
     /**
      * Constructor del estado
@@ -22,6 +22,15 @@ public class Estado {
      */
     public Estado(String nombre){
         this.nombre=nombre;
+    }    
+    /**
+     * Constructor del estado
+     * @param nombre nombre del nuevo estado
+     * @param marcaFinal marca si el estado es final o no
+     */
+    public Estado(String nombre, boolean marcaFinal){
+        this.nombre=nombre;
+        this.esFinal=marcaFinal;
     }    
     /**
      * Método para buscar una transicion en el automata, segun la letra que usa para cambiar de estado
@@ -44,7 +53,7 @@ public class Estado {
      * @throws TransicionYaExiste en caso de que la transicion con esta letra ya exista, se lanza una excepción
      */
     public void agregarTransicion (char tran) throws TransicionYaExiste{
-        if(buscarTransicion(tran)==-1)
+        if(buscarTransicion(tran)!=-1)
             throw new TransicionYaExiste("La transición con esta letra del alfabeto, ya existe en este estado");
         Transicion nuevo=new Transicion(tran);
         transiciones.add(nuevo);
@@ -97,5 +106,12 @@ public class Estado {
      */
     public void setNombre(String nombre){
         this.nombre=nombre;
+    }
+    /**
+     * Marca el estado como final
+     * @param cambio se manda un true si el estado quiere marcarse como final, false de lo contrario
+     */
+    public void setFinal(boolean cambio){
+        this.esFinal=cambio;
     }
 }

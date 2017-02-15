@@ -5,17 +5,38 @@
  */
 package Automatas;
 
+import Excepciones.EstadoNoExiste;
+import Excepciones.EstadoYaExiste;
+import Excepciones.SimboloNoExiste;
+import Excepciones.SimboloYaExiste;
+import java.awt.event.ActionEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author juampa
  */
 public class Ventana1 extends javax.swing.JFrame {
-
+    private Automata automata1=new Automata();
+    private EstadoCustomListModel estados = new EstadoCustomListModel();
+    private TransicionesCustomListModel transiciones = new TransicionesCustomListModel();
+    private LenguajeCustomListModel lenguaje = new LenguajeCustomListModel();
+    private Estado temp=null;
+    private String simboloT="";
     /**
      * Creates new form Ventana1
+     * Setea los modelos creados para manejo de cada tipo de dato a ingresar con JLists
      */
     public Ventana1() {
         initComponents();
+        listaLenguaje.setModel(lenguaje);
+        listaEstados1.setModel(estados);
+        listaTransiciones1.setModel(transiciones);
+        //listaEstTransiciones1.setModel(estados);
+        listaTransiciones1.setModel(lenguaje);
+        automataPanel1.setVisible(false);
     }
 
     /**
@@ -27,23 +48,395 @@ public class Ventana1 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lenguajePanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        lenguajeField = new javax.swing.JTextField();
+        ingresarLenguajeButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        listaLenguaje = new javax.swing.JList<>();
+        eliminarLenguajeButton = new javax.swing.JButton();
+        lengTerminadoButton = new javax.swing.JButton();
+        automataPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listaEstados1 = new javax.swing.JList<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        listaTransiciones1 = new javax.swing.JList<>();
+        estadosField1 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        estadosInButton1 = new javax.swing.JButton();
+        estadosErButton1 = new javax.swing.JButton();
+        finalCheck1 = new javax.swing.JCheckBox();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        transicionesVoid1 = new javax.swing.JComboBox<>();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Automatas");
+        setResizable(false);
+
+        jLabel1.setText("Ingresar:");
+
+        lenguajeField.setNextFocusableComponent(ingresarLenguajeButton);
+        lenguajeField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                lenguajeFieldKeyReleased(evt);
+            }
+        });
+
+        ingresarLenguajeButton.setText("Ingresar");
+        ingresarLenguajeButton.setNextFocusableComponent(listaLenguaje);
+        ingresarLenguajeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ingresarLenguajeButtonActionPerformed(evt);
+            }
+        });
+
+        listaLenguaje.setNextFocusableComponent(eliminarLenguajeButton);
+        listaLenguaje.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listaLenguajeValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(listaLenguaje);
+
+        eliminarLenguajeButton.setText("Eliminar Seleccionado");
+        eliminarLenguajeButton.setNextFocusableComponent(lengTerminadoButton);
+        eliminarLenguajeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarLenguajeButtonActionPerformed(evt);
+            }
+        });
+
+        lengTerminadoButton.setText("Terminado");
+        lengTerminadoButton.setNextFocusableComponent(lenguajeField);
+        lengTerminadoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lengTerminadoButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout lenguajePanelLayout = new javax.swing.GroupLayout(lenguajePanel);
+        lenguajePanel.setLayout(lenguajePanelLayout);
+        lenguajePanelLayout.setHorizontalGroup(
+            lenguajePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(lenguajePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(lenguajePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(lenguajePanelLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lenguajeField, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(lenguajePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(eliminarLenguajeButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ingresarLenguajeButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(lenguajePanelLayout.createSequentialGroup()
+                .addGap(89, 89, 89)
+                .addComponent(lengTerminadoButton))
+        );
+        lenguajePanelLayout.setVerticalGroup(
+            lenguajePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(lenguajePanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(lenguajePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(lenguajePanelLayout.createSequentialGroup()
+                        .addGroup(lenguajePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lenguajeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ingresarLenguajeButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(eliminarLenguajeButton)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lengTerminadoButton))
+        );
+
+        automataPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Automata 1"));
+
+        listaEstados1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listaEstados1ValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(listaEstados1);
+
+        listaTransiciones1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listaTransiciones1ValueChanged(evt);
+            }
+        });
+        jScrollPane3.setViewportView(listaTransiciones1);
+
+        estadosField1.setNextFocusableComponent(finalCheck1);
+        estadosField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                estadosField1KeyReleased(evt);
+            }
+        });
+
+        jLabel2.setText("Nombre:");
+
+        estadosInButton1.setText("Ingresar");
+        estadosInButton1.setNextFocusableComponent(estadosErButton1);
+        estadosInButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                estadosInButton1ActionPerformed(evt);
+            }
+        });
+
+        estadosErButton1.setText("Eliminar Seleccionado");
+        estadosErButton1.setNextFocusableComponent(estadosField1);
+        estadosErButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                estadosErButton1ActionPerformed(evt);
+            }
+        });
+
+        finalCheck1.setText("Final");
+        finalCheck1.setNextFocusableComponent(estadosInButton1);
+        finalCheck1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                finalCheck1KeyReleased(evt);
+            }
+        });
+
+        jLabel3.setText("Transiciones:");
+
+        jLabel4.setText("Va a:");
+
+        jLabel5.setText("Estados:");
+
+        jButton1.setText("Aceptar");
+
+        javax.swing.GroupLayout automataPanel1Layout = new javax.swing.GroupLayout(automataPanel1);
+        automataPanel1.setLayout(automataPanel1Layout);
+        automataPanel1Layout.setHorizontalGroup(
+            automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(automataPanel1Layout.createSequentialGroup()
+                .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(estadosErButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(estadosInButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(automataPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(finalCheck1)
+                            .addComponent(estadosField1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(automataPanel1Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jButton1)
+                        .addContainerGap(40, Short.MAX_VALUE))
+                    .addGroup(automataPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(transicionesVoid1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
+        );
+        automataPanel1Layout.setVerticalGroup(
+            automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(automataPanel1Layout.createSequentialGroup()
+                .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(transicionesVoid1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(automataPanel1Layout.createSequentialGroup()
+                        .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(estadosField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(finalCheck1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(estadosInButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(estadosErButton1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addGap(0, 18, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(lenguajePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(automataPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(122, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(lenguajePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(automataPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(237, Short.MAX_VALUE))
         );
 
-        pack();
+        setSize(new java.awt.Dimension(1044, 480));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void ingresarLenguajeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarLenguajeButtonActionPerformed
+        ingresarLeng();
+    }//GEN-LAST:event_ingresarLenguajeButtonActionPerformed
+    /**
+     * Obtiene un estado cada vez que se selecciona su nombre en la lista
+     * @param evt 
+     */
+    private void listaEstados1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaEstados1ValueChanged
+        int seleccion = listaEstados1.getSelectedIndex();
+        if (seleccion!=-1) {
+            temp=estados.getEstado(seleccion);
+        }else
+            temp=null;
+    }//GEN-LAST:event_listaEstados1ValueChanged
+    /**
+     * Obtiene una letra del alfabeto cada vez que se selecciona en la lista
+     * @param evt 
+     */
+    private void listaLenguajeValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaLenguajeValueChanged
+        int seleccion = listaLenguaje.getSelectedIndex();
+        if (seleccion!=-1) {
+            simboloT=lenguaje.getSimbolo(seleccion);
+        }else
+            simboloT="";
+    }//GEN-LAST:event_listaLenguajeValueChanged
+    /**
+     * Elimina la letra del alfabeto que esté seleccionada en la lista
+     * @param evt 
+     */
+    private void eliminarLenguajeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarLenguajeButtonActionPerformed
+        try{
+            if(!simboloT.equals("")){
+                automata1.eliminarSimbolo(simboloT);
+                lenguaje.eliminarSimbolo(listaLenguaje.getSelectedIndex());
+            }
+        } catch (SimboloNoExiste ex) {
+            JOptionPane.showMessageDialog(null, ex.toString());
+        }
+    }//GEN-LAST:event_eliminarLenguajeButtonActionPerformed
+    /**
+     * Accesibilidad, realiza acciones al presionar "Enter"
+     * @param evt 
+     */
+    private void lenguajeFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lenguajeFieldKeyReleased
+        int tecla=evt.getKeyCode();
+        if(tecla==10){
+            ingresarLeng();
+        }
+    }//GEN-LAST:event_lenguajeFieldKeyReleased
+
+    private void listaTransiciones1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaTransiciones1ValueChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_listaTransiciones1ValueChanged
+    /**
+     * Al terminar de ingresar el alfabeto, muestra las pantallas de ingreso de estados y transiciones de los automatas, en caso de que no existan suficientes letras en el alfabeto muestra una advertencia
+     * @param evt 
+     */
+    private void lengTerminadoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lengTerminadoButtonActionPerformed
+        //try {
+            if(automata1.noLetras()>1){
+                /*String inicial="";
+                while(inicial.equals("")){
+                    inicial=JOptionPane.showInputDialog(null, "Ingrese el nombre del estado inicial").trim();
+                }
+                Estado eInicial = new Estado(inicial);
+                automata1.agregarEstado(eInicial);
+                automata1.marcarEstadoInicial(inicial);
+                estados.addEstado(eInicial);*/
+                
+                lenguajePanel.setVisible(false);
+                automataPanel1.setVisible(true);
+                estadosField1.requestFocus();
+            }else{
+                JOptionPane.showMessageDialog(null, "Ingrese al menos 2 letras al alfabeto");
+                lenguajeField.selectAll();
+                lenguajeField.requestFocus();
+            }
+        /*} catch (EstadoYaExiste | EstadoNoExiste ex) {
+            JOptionPane.showMessageDialog(null,ex.toString());
+        }*/
+    }//GEN-LAST:event_lengTerminadoButtonActionPerformed
+
+    private void estadosErButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadosErButton1ActionPerformed
+        
+    }//GEN-LAST:event_estadosErButton1ActionPerformed
+
+    private void estadosInButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadosInButton1ActionPerformed
+        ingresarEst1();
+    }//GEN-LAST:event_estadosInButton1ActionPerformed
+
+    private void estadosField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_estadosField1KeyReleased
+        int tecla=evt.getKeyCode();
+        if(tecla==10){
+            ingresarEst1();
+        }
+    }//GEN-LAST:event_estadosField1KeyReleased
+
+    private void finalCheck1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_finalCheck1KeyReleased
+        int tecla=evt.getKeyCode();
+        if(tecla==10){
+            ingresarEst1();
+        }
+    }//GEN-LAST:event_finalCheck1KeyReleased
+    /**
+     * Ingresa símbolos al lenguaje
+     */
+    private void ingresarLeng(){
+        if(!(lenguajeField.getText().trim().equals(""))){
+            try {
+                automata1.agregarSimbolo(lenguajeField.getText().trim());
+                lenguaje.addSimbolo(lenguajeField.getText().trim());
+                lenguajeField.setText("");
+                lenguajeField.requestFocus();
+            } catch (SimboloYaExiste ex) {
+                JOptionPane.showMessageDialog(null, ex.toString());
+                lenguajeField.selectAll();
+                lenguajeField.requestFocus();
+            }
+            
+        }
+    }
+    
+    private void ingresarEst1(){
+        if(!(estadosField1.getText().trim().equals(""))){
+            try {
+                Estado nuevo= new Estado(estadosField1.getText().trim(), finalCheck1.isSelected());
+                automata1.agregarEstado(nuevo);
+                estados.addEstado(nuevo);
+                estadosField1.setText("");
+                finalCheck1.setSelected(false);
+                estadosField1.requestFocus();
+            } catch (EstadoYaExiste ex) {
+                JOptionPane.showMessageDialog(null, ex.toString());
+                estadosField1.selectAll();
+                estadosField1.requestFocus();
+            }
+        }
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -80,5 +473,28 @@ public class Ventana1 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel automataPanel1;
+    private javax.swing.JButton eliminarLenguajeButton;
+    private javax.swing.JButton estadosErButton1;
+    private javax.swing.JTextField estadosField1;
+    private javax.swing.JButton estadosInButton1;
+    private javax.swing.JCheckBox finalCheck1;
+    private javax.swing.JButton ingresarLenguajeButton;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JButton lengTerminadoButton;
+    private javax.swing.JTextField lenguajeField;
+    private javax.swing.JPanel lenguajePanel;
+    private javax.swing.JList<String> listaEstados1;
+    private javax.swing.JList<String> listaLenguaje;
+    private javax.swing.JList<String> listaTransiciones1;
+    private javax.swing.JComboBox<String> transicionesVoid1;
     // End of variables declaration//GEN-END:variables
 }
