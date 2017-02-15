@@ -13,12 +13,19 @@ import java.util.ArrayList;
  * @author juampa
  */
 public class Automata {
-    private ArrayList<String> lenguaje=new ArrayList<String>();
+    private ArrayList<String> lenguaje=new ArrayList<>();
     //private Estado inicial=null;
-    private ArrayList<Estado> estados=new ArrayList<Estado>();
+    private ArrayList<Estado> estados=new ArrayList<>();
     private boolean estInicial=false;
     private int pocEstInicial=-1;
     public Automata() {}
+    /**
+     * Getter del lenguaje
+     * @return array con los símbolos del lenguaje
+     */
+    public ArrayList<String> getLenguaje(){
+        return lenguaje;
+    }
     /**
      * Método para agregar símbolos al alfabeto del autómata
      * @param nuevo nuevo simbolo a agregar
@@ -71,8 +78,9 @@ public class Automata {
      * @throws EstadoNoExiste si no hay ningun estado con este nombre, no se elimina nada
      */
     public void eliminarEstado(Estado est) throws EstadoNoExiste{
+        String nombreBorrar=est.getNombre();
         boolean existe=false;
-        int poc=0;
+        int poc=-1;
         for (int i = 0; i < estados.size(); i++) {
             Estado temp=estados.get(i);
             if (temp.getNombre().equals(est.getNombre())){
@@ -84,6 +92,16 @@ public class Automata {
         if(!existe)
             throw new EstadoNoExiste("Este estado no existe en el automata");
         estados.remove(poc);
+        Estado temp;
+        for (int i = 0; i < estados.size(); i++) {
+            temp=estados.get(i);
+            for (int j = 0; j < 10; j++) {
+                Transicion tran=temp.getTransiciones().get(j);
+                if(tran.getSiguiente().equals(nombreBorrar)){
+                    estados.get(i).getTransiciones().get(j).setSiguiente(Transicion.ESTADO_SIGUIENTE_VACIO);
+                }
+            }
+        }
     }
     /**
      * Método para marcar el estado inicial del autómata, y establecer su posición
@@ -187,18 +205,18 @@ public class Automata {
      * @param cadena cadena a validar
      * @return true si la cadena pertenece al lenguaje, false si no
      */
-    public boolean comprobarCadena(String cadena){
-        int cont=0;
-        Estado est=estados.get(pocEstInicial);
-        while(cont<cadena.length()){
-            char letra=cadena.charAt(cont);
-            est=estados.get(buscarEstado(est.cambiarDeEstado(letra)));
-            cont++;
-        }
-        if(est.isFinal())
-            return true;
-        else
-            return false;
+    public boolean comprobarCadena(String cadena) throws NoEsAFD{
+        if(isAFD()){
+            int cont=0;
+            Estado est=estados.get(pocEstInicial);
+            while(cont<cadena.length()){
+                char letra=cadena.charAt(cont);
+                est=estados.get(buscarEstado(est.cambiarDeEstado(letra)));
+                cont++;
+            }
+            return est.isFinal();
+        }else
+            throw new NoEsAFD("El autómata no es AFD, no puede comprobar la cadena");
     }
     /**
      * Busca estados por su nombre
@@ -215,6 +233,32 @@ public class Automata {
             }
         }
         return poc;
+    }
+    /**
+     * Devuelve el número de símbolos que contiene el alfabeto
+     * @return simbolos del alfabeto
+     */
+    public int noLetras(){
+        return lenguaje.size();
+    }
+    /**
+     * Comprueba si el autómata es finito determinista
+     * @return true si es AFD y false si es AFND
+     */
+    public boolean isAFD(){
+        Estado est;
+        //Transicion tran;
+        boolean es=true;
+        for (int i = 0; i < estados.size(); i++) {
+            est=estados.get(i);
+            for (int j = 0; j < lenguaje.size(); j++) {
+                if(est.getTransiciones().get(j).getLetra()==' '){
+                    es=false;
+                    break;
+                }
+            }
+        }
+        return es;
     }
     
 }
