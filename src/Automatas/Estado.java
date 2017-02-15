@@ -12,9 +12,9 @@ import java.util.ArrayList;
  * @author juampa
  */
 public class Estado {
-    private String nombre;
-    private boolean esFinal;
-    private ArrayList<Transicion> transiciones=new ArrayList<Transicion>();
+    private String nombre="";
+    private boolean esFinal=false;
+    private ArrayList<Transicion> transiciones=new ArrayList<>();
     public Estado(){}
     /**
      * Constructor del estado
