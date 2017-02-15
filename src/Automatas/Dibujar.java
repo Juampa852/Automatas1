@@ -6,6 +6,7 @@
 package Automatas;
 
 import Excepciones.EstadoNoExiste;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -29,25 +30,49 @@ public class Dibujar extends JPanel{
      * @throws Excepciones.EstadoNoExiste
      */
     public Dibujar(Automata auto) throws EstadoNoExiste
+    { 
+            actualizar(auto);
+            ventana.add(this);//Añade el lienzo al frame
+            ventana.setVisible(true);//Hace visible todo el frame    
+    }
+    /**
+     * metodo para actualizar el dibujo del automata
+     * @param auto  automata a sibujar
+     */
+    public void actualizar(Automata auto) throws EstadoNoExiste
     {
-              
-            automataPrueba=auto; 
-            int i=auto.getPocEstadoInicial();
-            if(i>-1)
+        int i=auto.getPocEstadoInicial();// se busca la posicion del estado inicial en el arreglo
+            if(i>-1)//Se comprueba que el arreglo posea posicion inicial
             {
-                estadoG ini= new estadoG(auto.getEstado(auto.getPocEstadoInicial()),80, 80);
-                estadoG est;
-                estados.add(ini);
-                for(int o=0;o<auto.noEstados();o++)
+                int cuadrado=1;//se inicia un contador para calcular la raiz cuadrada exacta minima necesaria
+                //para distribuir los estados en una matriz cuadrada
+                while(Math.pow(cuadrado, 2)<auto.noEstados())//Cuando el cuadrado de la base es mayor al numero de estados
+                    //se encuentra la raiz minima
                 {
-                    est = new estadoG(auto.getEstado(o),150*o+80, 80);
-                    if(!ini.est.getNombre().equals(est.est.getNombre()))
+                    cuadrado++;
+                }
+                estadoG ini= new estadoG(auto.getEstado(auto.getPocEstadoInicial()),50, 50);//se genera el estado grafico inicial
+                estadoG est;
+                estados.add(ini);//se añade como primer elemento el estado inicial al arreglo de estados graficos
+                int col=1, fil=0;
+                for(int o=0;o<auto.noEstados();o++)//se recorre el arreglo de estados del automata, para agregarlas a un estado grafico
+                    //y añadirlos en el arreglo de la clase dibujar
+                {
+                    est = new estadoG(auto.getEstado(o),150*col+50, 50+150*fil);//se les asignan posiciones en X y Y dependiendo del recorrido
+                    if(!ini.est.getNombre().equals(est.est.getNombre()))//se evita agregar el estado inicial dos veces
+                    {
                         estados.add(est);
+                        col++;
+                        if(col==cuadrado)
+                        {
+                            col=0;
+                            fil++;
+                        }
+                    }
                 }
             }
             calcularDimensiones();
-            ventana.setVisible(true);//Hace visible todo el frame
-            ventana.add(this);//Añade el lienzo al frame
+            this.setBackground(Color.white);
     }
     /**
      * Método que genera las dimensiones de la ventana dependiendo del numero de estados
@@ -56,19 +81,20 @@ public class Dibujar extends JPanel{
      */
     public void calcularDimensiones()
     {
-        int cuadrado=1;
+        int cuadrado=1;//Entero que almacena la raiz exacta minima N, de forma que pudan guardarse los estados como una matriz NxN
         while(Math.pow(cuadrado, 2)<estados.size())
         {
             cuadrado++;
         }
         int x=cuadrado, y=1;
-        while(y*x<estados.size())
+        while(y*x<estados.size())//se calculan las dimensiones, calculando cuantos estados iran en X y cuantos en Y
         {
             y++;
         }
-        x=(x+2)*100;
-        y=(y+2)*100;
-        ventana.setSize(x,y);
+        x=(x)*100+(x+1)*50; //Se multiplican el numero de estados en X por 2 veces el radio de los ovalos
+        //y se suman la cantidad de espacios entre estados*radio
+        y=(y)*100+(y+2)*50; //se calcula igual que x
+        ventana.setSize(x,y);//se le da al frame estas dimensiones
     }
     @Override
     public void paint(Graphics g)
@@ -86,7 +112,7 @@ public class Dibujar extends JPanel{
      * @param estG el objeto estado grafico a dibujar
      * @param g objeto de tipo graphics que permite realizar dibujos en el panel
      */
-    public void dibujarEstado(int posicion, estadoG estG,Graphics g){
+    private void dibujarEstado(int posicion, estadoG estG,Graphics g){
         Graphics2D g2d= (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         if(posicion==0)
@@ -94,15 +120,29 @@ public class Dibujar extends JPanel{
             g2d.drawLine(estG.x-30,estG.y+20, estG.x,estG.y+50);
             g2d.drawLine(estG.x-30,estG.y+80, estG.x,estG.y+50);             
         }
+        g2d.setColor(asignarColor(posicion));
         g2d.drawOval(estG.x,estG.y,100,100);   
         if(estG.est.isFinal())
                 g2d.drawOval(estG.x+10,estG.y+10,80,80);
-            g2d.drawChars(estG.est.getNombre().toCharArray(), 0,estG.est.getNombre().length() ,estG.x+50,estG.y+50);
+        g2d.drawChars(estG.est.getNombre().toCharArray(), 0,estG.est.getNombre().length() ,estG.x+50,estG.y+50);
+        if(estG.est.getTransiciones().size()>0)
+        {
+            for (Transicion trans : estG.est.getTransiciones()) {
+                estadoG t=buscarEstado(trans);
+                double angulo=Math.atan2(t.y-estG.y, t.x-estG.x);
+                if(t!=null)
+                    g2d.drawLine(estG.x+50+(int)(Math.cos(angulo)*50), estG.y+50+(int)(Math.sin(angulo)*50), t.x+50-(int)(Math.cos(angulo)*50), t.y+50-(int)(Math.sin(angulo)*50));
+                g2d.fillOval(t.x+50-(int)(Math.cos(angulo)*50)-3, t.y+50-(int)(Math.sin(angulo)*50)-3, 6, 6);
+                char[] caracteres=new char[1];
+                caracteres[0]=trans.getLetra();
+                g2d.drawChars(caracteres,0,1, estG.x+50+(int)(Math.cos(angulo)*50)-5,estG.y+50+(int)(Math.sin(angulo)*50)-5);
+            }
+        }
     }
     /**
      * Clase estado grafico, es una clase interna de la clase Dibujar
      * Su funcion es almacenar un estado y la posicion que se le dara en el panel
-     * de esa forma, al graficar una transicion, puede conocerse las pocisiones de los estados en el lienzo
+     * de esa forma, al graficar una transicion, puede conocerse las posiciones de los estados en el lienzo
      */
     private class estadoG{
         int x, y;
@@ -112,6 +152,38 @@ public class Dibujar extends JPanel{
             this.est=est;
             this.x=x;
             this.y=y;
+        }
+    }
+    private estadoG buscarEstado(Transicion trans)
+    {
+        trans.getSiguiente();
+        for (estadoG estado : estados) {
+            if(estado.est.getNombre().equals(trans.getSiguiente()))
+                return estado;
+        }
+        return null;
+    }
+    private Color asignarColor(int posicion)
+    {
+        switch (posicion) {
+            case 1:
+                return Color.BLACK;
+            case 2:
+                return Color.CYAN;
+            case 3:
+                return Color.GREEN;
+            case 4:
+                return Color.MAGENTA;
+            case 5:
+                return Color.ORANGE;
+            case 6:
+                return Color.RED;
+            case 7:
+                return Color.PINK;
+            case 8:
+                return Color.YELLOW;
+            default:
+                return Color.BLUE;
         }
     }
 }
