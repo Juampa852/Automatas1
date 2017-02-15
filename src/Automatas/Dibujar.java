@@ -28,12 +28,14 @@ public class Dibujar extends JPanel{
      * Genera un arreglo de estados graficos marcando en la primera posicion el estado inicial
      * @param auto automata a dibujar
      * @throws Excepciones.EstadoNoExiste
+     * @throws java.lang.InterruptedException
      */
-    public Dibujar(Automata auto) throws EstadoNoExiste
-    { 
-            actualizar(auto);
-            if(auto.getPocEstadoInicial()<0)
+    public Dibujar(Automata auto) throws EstadoNoExiste, InterruptedException
+    {       
+            if(auto.getPocEstadoInicial()>-1)
             {
+                actualizar(auto);
+                this.setBackground(Color.WHITE);
                 ventana.add(this);//Añade el lienzo al frame
                 ventana.setVisible(true);//Hace visible todo el frame
             }
@@ -41,12 +43,12 @@ public class Dibujar extends JPanel{
     /**
      * metodo para actualizar el dibujo del automata
      * @param auto  automata a sibujar
+     * @throws Excepciones.EstadoNoExiste
+     * @throws java.lang.InterruptedException
      */
-    public void actualizar(Automata auto) throws EstadoNoExiste
+    public void actualizar(Automata auto) throws EstadoNoExiste, InterruptedException
     {
-        int i=auto.getPocEstadoInicial();// se busca la posicion del estado inicial en el arreglo
-            if(i>-1)//Se comprueba que el arreglo posea posicion inicial
-            {
+                estados=new ArrayList<>();
                 int cuadrado=1;//se inicia un contador para calcular la raiz cuadrada exacta minima necesaria
                 //para distribuir los estados en una matriz cuadrada
                 while(Math.pow(cuadrado, 2)<auto.noEstados())//Cuando el cuadrado de la base es mayor al numero de estados
@@ -74,17 +76,13 @@ public class Dibujar extends JPanel{
                     }
                 }
                 calcularDimensiones();
-                this.setBackground(Color.white);
-                repaint();
-            }
-            
     }
     /**
      * Método que genera las dimensiones de la ventana dependiendo del numero de estados
      * Este mpetodo busca que las dimensiones permitan dibujar los estados como una matriz cuadrada
      * utilizando el cuadrado entero superior, por ejemplo, si existen 7 estados, se acomodan en una matriz de 3x3 (9)
      */
-    public void calcularDimensiones()
+    private void calcularDimensiones()
     {
         int cuadrado=1;//Entero que almacena la raiz exacta minima N, de forma que pudan guardarse los estados como una matriz NxN
         while(Math.pow(cuadrado, 2)<estados.size())
@@ -104,7 +102,7 @@ public class Dibujar extends JPanel{
     @Override
     public void paint(Graphics g)
     {
-        super.paint(g);
+        super.paint(g);       
         for(int i=0;i<estados.size();i++)
         {
             dibujarEstado(i,estados.get(i),g);
@@ -134,13 +132,20 @@ public class Dibujar extends JPanel{
         {
             for (Transicion trans : estG.est.getTransiciones()) {
                 estadoG t=buscarEstado(trans);
-                double angulo=Math.atan2(t.y-estG.y, t.x-estG.x);
-                if(t!=null)
+                String caracteres=concatenar(t,estG.est.getTransiciones());
+                if(!estG.est.getNombre().equals(t.est.getNombre()))
+                {
+                    double angulo=Math.atan2(t.y-estG.y, t.x-estG.x);
                     g2d.drawLine(estG.x+50+(int)(Math.cos(angulo)*50), estG.y+50+(int)(Math.sin(angulo)*50), t.x+50-(int)(Math.cos(angulo)*50), t.y+50-(int)(Math.sin(angulo)*50));
-                g2d.fillOval(t.x+50-(int)(Math.cos(angulo)*50)-3, t.y+50-(int)(Math.sin(angulo)*50)-3, 6, 6);
-                char[] caracteres=new char[1];
-                caracteres[0]=trans.getLetra();
-                g2d.drawChars(caracteres,0,1, estG.x+50+(int)(Math.cos(angulo)*50)-5,estG.y+50+(int)(Math.sin(angulo)*50)-5);
+                    g2d.fillOval(t.x+50-(int)(Math.cos(angulo)*50)-3, t.y+50-(int)(Math.sin(angulo)*50)-3, 6, 6);
+                    g2d.drawChars(caracteres.toCharArray(),0,caracteres.length(), estG.x+50+(int)(Math.cos(angulo)*50)-5,estG.y+50+(int)(Math.sin(angulo)*50)-5);
+                }
+                else
+                {
+                    g2d.drawOval(estG.x+30-(int)(50*Math.sin(45)), estG.y+30-(int)(50*Math.sin(45)), 30, 30);
+                    g2d.fillOval(estG.x+50-(int)(50*Math.sin(45))+3, estG.y+50-(int)(50*Math.sin(45))+3, 6, 6);
+                    g2d.drawChars(caracteres.toCharArray(),0,caracteres.length(),estG.x+30-(int)(50*Math.sin(45)), estG.y+30-(int)(50*Math.sin(45)));
+                }
             }
         }
     }
@@ -159,6 +164,38 @@ public class Dibujar extends JPanel{
             this.y=y;
         }
     }
+    /**
+     * Funcion que retorna una cadena con los caracteres que lleven a un mismo estado
+     * @param destino estado grafico al que se quiere acceder
+     * @param array arreglo de transiciones de un estado
+     * @return caracteres que llevan al estado destino
+     */
+    private String concatenar(estadoG destino, ArrayList<Transicion> array)
+    {
+        String cadena="";
+        for (Transicion array1 : array) {
+            if(array1.getSiguiente().equals(destino.est.getNombre()))
+                cadena=cadena+array1.getLetra();
+            if(!array1.equals(array.get(array.size()-1)))
+                cadena=cadena+",";
+        }
+        if(cadena.length()<3)
+        {
+            String[] cadena1=cadena.split(",");
+            cadena="";
+            for (String cadena11 : cadena1) {
+                cadena += cadena11;
+            }
+            return cadena;
+        }
+        else
+            return cadena;
+    }
+    /**
+     * Funcion que busca un estadoGrafico en el arreglo de la clase y lo returna
+     * @param trans Onjeto trancision que se quiere buscar
+     * @return Estado buscado a partir de una transicion
+     */
     private estadoG buscarEstado(Transicion trans)
     {
         trans.getSiguiente();
@@ -168,10 +205,15 @@ public class Dibujar extends JPanel{
         }
         return null;
     }
+    /**
+     * Funcion que retorna colores, dependiendo del numero, teniendo 9 posibilidades
+     * @param posicion posicion en el arreglo de Estados gráficos
+     * @return color para dibujar el estado y sus transiciones
+     */
     private Color asignarColor(int posicion)
     {
-        while(posicion>9)
-            posicion=posicion-9;
+        while(posicion>8)
+        { posicion=posicion-9;}
         switch (posicion) {
             case 1:
                 return Color.BLACK;
