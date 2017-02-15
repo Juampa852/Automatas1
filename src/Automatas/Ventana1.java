@@ -12,6 +12,7 @@ import Excepciones.SimboloYaExiste;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -35,6 +36,8 @@ public class Ventana1 extends javax.swing.JFrame {
         listaEstados1.setModel(estados);
         listaTransiciones1.setModel(transiciones);
         //listaEstTransiciones1.setModel(estados);
+        //ComboBoxModel<Estado> comboEstados= new ComboBoxModel<>();
+        //transicionesCombo1.setModel();
         listaTransiciones1.setModel(lenguaje);
         automataPanel1.setVisible(false);
     }
@@ -70,8 +73,8 @@ public class Ventana1 extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        transicionesVoid1 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        transicionesCombo1 = new javax.swing.JComboBox<>();
+        marcarInicialButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Automatas");
@@ -211,12 +214,17 @@ public class Ventana1 extends javax.swing.JFrame {
 
         jLabel5.setText("Estados:");
 
-        jButton1.setText("Aceptar");
-
-        jButton2.setText("Marcar Inicial");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Marcar Transicion");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        marcarInicialButton1.setText("Marcar Inicial");
+        marcarInicialButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                marcarInicialButton1ActionPerformed(evt);
             }
         });
 
@@ -240,31 +248,36 @@ public class Ventana1 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(automataPanel1Layout.createSequentialGroup()
+                        .addComponent(marcarInicialButton1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(automataPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4))
-                    .addComponent(jButton2))
-                .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(automataPanel1Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jButton1)
-                        .addContainerGap(40, Short.MAX_VALUE))
-                    .addGroup(automataPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(transicionesVoid1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(automataPanel1Layout.createSequentialGroup()
+                                .addComponent(transicionesCombo1, 0, 148, Short.MAX_VALUE)
+                                .addContainerGap())
+                            .addGroup(automataPanel1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jButton1)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         automataPanel1Layout.setVerticalGroup(
             automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(automataPanel1Layout.createSequentialGroup()
                 .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(transicionesVoid1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(automataPanel1Layout.createSequentialGroup()
+                        .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(transicionesCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1))
                     .addComponent(jLabel3)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -280,9 +293,7 @@ public class Ventana1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(estadosErButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                .addComponent(marcarInicialButton1)
                 .addGap(0, 18, Short.MAX_VALUE))
         );
 
@@ -294,7 +305,7 @@ public class Ventana1 extends javax.swing.JFrame {
                 .addComponent(lenguajePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(automataPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -360,10 +371,6 @@ public class Ventana1 extends javax.swing.JFrame {
             ingresarLeng();
         }
     }//GEN-LAST:event_lenguajeFieldKeyReleased
-
-    private void listaTransiciones1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaTransiciones1ValueChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_listaTransiciones1ValueChanged
     /**
      * Al terminar de ingresar el alfabeto, muestra las pantallas de ingreso de estados y transiciones de los automatas, en caso de que no existan suficientes letras en el alfabeto muestra una advertencia
      * @param evt 
@@ -415,9 +422,22 @@ public class Ventana1 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_finalCheck1KeyReleased
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void marcarInicialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_marcarInicialButton1ActionPerformed
+        try {
+            if(temp!=null)
+                automata1.marcarEstadoInicial(temp.getNombre());
+        } catch (EstadoNoExiste ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.toString());
+        }
+    }//GEN-LAST:event_marcarInicialButton1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void listaTransiciones1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaTransiciones1ValueChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_listaTransiciones1ValueChanged
     /**
      * Ingresa símbolos al lenguaje
      */
@@ -442,6 +462,8 @@ public class Ventana1 extends javax.swing.JFrame {
                 Estado nuevo= new Estado(estadosField1.getText().trim(), finalCheck1.isSelected());
                 automata1.agregarEstado(nuevo);
                 estados.addEstado(nuevo);
+                transicionesCombo1.addItem(nuevo.getNombre());
+                transicionesCombo1.setSelectedIndex(-1);
                 estadosField1.setText("");
                 finalCheck1.setSelected(false);
                 estadosField1.requestFocus();
@@ -497,7 +519,6 @@ public class Ventana1 extends javax.swing.JFrame {
     private javax.swing.JCheckBox finalCheck1;
     private javax.swing.JButton ingresarLenguajeButton;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -512,6 +533,7 @@ public class Ventana1 extends javax.swing.JFrame {
     private javax.swing.JList<String> listaEstados1;
     private javax.swing.JList<String> listaLenguaje;
     private javax.swing.JList<String> listaTransiciones1;
-    private javax.swing.JComboBox<String> transicionesVoid1;
+    private javax.swing.JButton marcarInicialButton1;
+    private javax.swing.JComboBox<String> transicionesCombo1;
     // End of variables declaration//GEN-END:variables
 }

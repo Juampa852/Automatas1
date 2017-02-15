@@ -17,7 +17,8 @@ public class Automata {
     //private Estado inicial=null;
     private ArrayList<Estado> estados=new ArrayList<>();
     private boolean estInicial=false;
-    private int pocEstInicial=-1;
+    private int pocEstInicial=ESTADO_INICIAL_DEFAULT;
+    public static final int ESTADO_INICIAL_DEFAULT=-1;
     public Automata() {}
     /**
      * Getter del lenguaje
@@ -91,6 +92,10 @@ public class Automata {
         }
         if(!existe)
             throw new EstadoNoExiste("Este estado no existe en el automata");
+        if (poc==pocEstInicial) {
+            pocEstInicial=ESTADO_INICIAL_DEFAULT;
+            estInicial=false;
+        }
         estados.remove(poc);
         Estado temp;
         for (int i = 0; i < estados.size(); i++) {
@@ -258,7 +263,8 @@ public class Automata {
                 }
             }
         }
-        return es;
+        return (es&&estInicial);
+        
     }
     
 }
