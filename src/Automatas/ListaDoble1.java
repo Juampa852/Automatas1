@@ -93,13 +93,13 @@ public class ListaDoble1 {
      * @return  true si lo encuentra, false sí no
      */
      public boolean buscar(String valor, String valor1){
-        NodoDoble aux = inicio;
+        NodoDoble aux = inicio.getSiguiente();
         
-        while ((aux!= null)){
+        while ((aux!= fin)){
             if((aux.getDato().equals(valor))&&(aux.getDato2().equals(valor1))){
                 return true;
             }
-              aux= aux.getSiguiente();
+            aux=aux.getSiguiente();
         }
       return false;
     }
