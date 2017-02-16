@@ -261,7 +261,7 @@ public class Automata {
                 break;
             }
             for (int j = 0; j < lenguaje.size(); j++) {
-                if(!est.getTransiciones().get(j).getSiguiente().equals(Transicion.ESTADO_SIGUIENTE_VACIO)){
+                if(est.getTransiciones().get(j).getSiguiente().equals(Transicion.ESTADO_SIGUIENTE_VACIO)){
                     es=false;
                     break;
                 }
