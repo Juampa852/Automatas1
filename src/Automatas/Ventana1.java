@@ -72,6 +72,23 @@ public class Ventana1 extends javax.swing.JFrame {
         transicionesCombo1 = new javax.swing.JComboBox<>();
         marcarInicialButton1 = new javax.swing.JButton();
         lenguajeCombo1 = new javax.swing.JComboBox<>();
+        dibujarButton1 = new javax.swing.JButton();
+        automataPanel2 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        listaEstados2 = new javax.swing.JList<>();
+        estadosField2 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        estadosInButton2 = new javax.swing.JButton();
+        estadosErButton2 = new javax.swing.JButton();
+        finalCheck2 = new javax.swing.JCheckBox();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        setearTransicion2 = new javax.swing.JButton();
+        transicionesCombo2 = new javax.swing.JComboBox<>();
+        marcarInicialButton2 = new javax.swing.JButton();
+        lenguajeCombo2 = new javax.swing.JComboBox<>();
+        dibujarButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Automatas");
@@ -241,6 +258,13 @@ public class Ventana1 extends javax.swing.JFrame {
             }
         });
 
+        dibujarButton1.setText("Dibujar");
+        dibujarButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dibujarButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout automataPanel1Layout = new javax.swing.GroupLayout(automataPanel1);
         automataPanel1.setLayout(automataPanel1Layout);
         automataPanel1Layout.setHorizontalGroup(
@@ -277,7 +301,9 @@ public class Ventana1 extends javax.swing.JFrame {
                                     .addComponent(transicionesCombo1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(automataPanel1Layout.createSequentialGroup()
                                 .addGap(38, 38, 38)
-                                .addComponent(setearTransicion1)))
+                                .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(setearTransicion1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(dibujarButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         automataPanel1Layout.setVerticalGroup(
@@ -293,7 +319,9 @@ public class Ventana1 extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(transicionesCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(setearTransicion1))
+                        .addComponent(setearTransicion1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dibujarButton1))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(automataPanel1Layout.createSequentialGroup()
                         .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -307,8 +335,162 @@ public class Ventana1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(estadosErButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(marcarInicialButton1)
-                .addGap(0, 18, Short.MAX_VALUE))
+                .addComponent(marcarInicialButton1))
+        );
+
+        automataPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Automata 2"));
+
+        listaEstados2.setNextFocusableComponent(estadosInButton1);
+        listaEstados2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                listaEstados2KeyReleased(evt);
+            }
+        });
+        listaEstados2.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listaEstados2ValueChanged(evt);
+            }
+        });
+        jScrollPane3.setViewportView(listaEstados2);
+
+        estadosField2.setNextFocusableComponent(finalCheck1);
+        estadosField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                estadosField2KeyReleased(evt);
+            }
+        });
+
+        jLabel6.setText("Nombre:");
+
+        estadosInButton2.setText("Ingresar");
+        estadosInButton2.setNextFocusableComponent(estadosErButton1);
+        estadosInButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                estadosInButton2ActionPerformed(evt);
+            }
+        });
+
+        estadosErButton2.setText("Eliminar Seleccionado");
+        estadosErButton2.setName(""); // NOI18N
+        estadosErButton2.setNextFocusableComponent(marcarInicialButton1);
+        estadosErButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                estadosErButton2ActionPerformed(evt);
+            }
+        });
+
+        finalCheck2.setText("Final");
+        finalCheck2.setNextFocusableComponent(listaEstados1);
+        finalCheck2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                finalCheck2KeyReleased(evt);
+            }
+        });
+
+        jLabel7.setText("Transiciones:");
+
+        jLabel8.setText("Va a:");
+
+        jLabel9.setText("Estados:");
+
+        setearTransicion2.setText("Guardar Transicion");
+        setearTransicion2.setNextFocusableComponent(estadosField1);
+        setearTransicion2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setearTransicion2ActionPerformed(evt);
+            }
+        });
+
+        transicionesCombo2.setNextFocusableComponent(setearTransicion1);
+
+        marcarInicialButton2.setText("Marcar Inicial");
+        marcarInicialButton2.setNextFocusableComponent(lenguajeCombo1);
+        marcarInicialButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                marcarInicialButton2ActionPerformed(evt);
+            }
+        });
+
+        lenguajeCombo2.setNextFocusableComponent(transicionesCombo1);
+        lenguajeCombo2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                lenguajeCombo2ItemStateChanged(evt);
+            }
+        });
+
+        dibujarButton2.setText("Dibujar");
+
+        javax.swing.GroupLayout automataPanel2Layout = new javax.swing.GroupLayout(automataPanel2);
+        automataPanel2.setLayout(automataPanel2Layout);
+        automataPanel2Layout.setHorizontalGroup(
+            automataPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(automataPanel2Layout.createSequentialGroup()
+                .addGroup(automataPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(automataPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(estadosErButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(estadosInButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(automataPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(automataPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(finalCheck2)
+                            .addComponent(estadosField2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(automataPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(automataPanel2Layout.createSequentialGroup()
+                        .addComponent(marcarInicialButton2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(automataPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(automataPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(automataPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(automataPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(automataPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lenguajeCombo2, 0, 129, Short.MAX_VALUE)
+                                    .addComponent(transicionesCombo2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(automataPanel2Layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addGroup(automataPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(setearTransicion2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(dibujarButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        automataPanel2Layout.setVerticalGroup(
+            automataPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(automataPanel2Layout.createSequentialGroup()
+                .addGroup(automataPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(automataPanel2Layout.createSequentialGroup()
+                        .addGroup(automataPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(lenguajeCombo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(automataPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(transicionesCombo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(setearTransicion2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dibujarButton2))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(automataPanel2Layout.createSequentialGroup()
+                        .addGroup(automataPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(estadosField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(finalCheck2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(estadosInButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(estadosErButton2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(marcarInicialButton2))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -318,8 +500,10 @@ public class Ventana1 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(lenguajePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(automataPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(202, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(automataPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(automataPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(269, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -329,10 +513,12 @@ public class Ventana1 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(automataPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(237, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(automataPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(988, 480));
+        setSize(new java.awt.Dimension(1148, 427));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -349,6 +535,8 @@ public class Ventana1 extends javax.swing.JFrame {
             temp=estados.getEstado(seleccion);
         }else
             temp=null;
+        lenguajeCombo1.setSelectedIndex(-1);
+        transicionesCombo1.setSelectedIndex(-1);
     }//GEN-LAST:event_listaEstados1ValueChanged
     /**
      * Obtiene una letra del alfabeto cada vez que se selecciona en la lista
@@ -441,6 +629,7 @@ public class Ventana1 extends javax.swing.JFrame {
     private void setearTransicion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setearTransicion1ActionPerformed
         try{
             if((lenguajeCombo1.getSelectedIndex()!=-1)&&(transicionesCombo1.getSelectedIndex()!=-1)){
+                //Estado temporal=temp;
                 automata1.modificarTransicion(temp, lenguajeCombo1.getSelectedItem().toString().charAt(0),transicionesCombo1.getSelectedItem().toString());
                 estados.getEstado(listaEstados1.getSelectedIndex()).getTransiciones().get(lenguajeCombo1.getSelectedIndex()).setSiguiente(transicionesCombo1.getSelectedItem().toString());
                 lenguajeCombo1.setSelectedIndex(-1);
@@ -471,11 +660,54 @@ public class Ventana1 extends javax.swing.JFrame {
         if (seleccion!=-1&&lenguajeCombo1.getModel().getSize()>0) {
             if(lengTerminado){
                 Transicion seleccionTran = estados.getEstado(listaEstados1.getSelectedIndex()).getTransiciones().get(seleccion);
-                transicionesCombo1.setSelectedItem(seleccionTran.getSiguiente());
+                if(!seleccionTran.getSiguiente().equals(""))
+                    transicionesCombo1.setSelectedItem(seleccionTran.getSiguiente());
+                else
+                    transicionesCombo1.setSelectedIndex(-1);
             }
-        }else
-            temp=null;
+        }
+            
     }//GEN-LAST:event_lenguajeCombo1ItemStateChanged
+
+    private void listaEstados2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listaEstados2KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_listaEstados2KeyReleased
+
+    private void listaEstados2ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaEstados2ValueChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_listaEstados2ValueChanged
+
+    private void estadosField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_estadosField2KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_estadosField2KeyReleased
+
+    private void estadosInButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadosInButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_estadosInButton2ActionPerformed
+
+    private void estadosErButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadosErButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_estadosErButton2ActionPerformed
+
+    private void finalCheck2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_finalCheck2KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_finalCheck2KeyReleased
+
+    private void setearTransicion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setearTransicion2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_setearTransicion2ActionPerformed
+
+    private void marcarInicialButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_marcarInicialButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_marcarInicialButton2ActionPerformed
+
+    private void lenguajeCombo2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_lenguajeCombo2ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lenguajeCombo2ItemStateChanged
+
+    private void dibujarButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dibujarButton1ActionPerformed
+        
+    }//GEN-LAST:event_dibujarButton1ActionPerformed
     /**
      * Ingresa símbolos al lenguaje
      */
@@ -542,10 +774,10 @@ public class Ventana1 extends javax.swing.JFrame {
         if(temp!=null){
             try {
                 int pos=automata1.getPocEstado(temp.getNombre());
+                //Estado borrar=temp;
                 automata1.eliminarEstado(temp);
-                estados.eliminarEstado(pos);
                 transicionesCombo1.removeItem(temp.getNombre());
-                temp=estados.getEstado(listaEstados1.getSelectedIndex());
+                estados.eliminarEstado(pos);
                 transicionesCombo1.setSelectedIndex(-1);
                 transicionesCombo1.requestFocus();
             } catch (EstadoNoExiste ex) {
@@ -590,27 +822,44 @@ public class Ventana1 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel automataPanel1;
+    private javax.swing.JPanel automataPanel2;
+    private javax.swing.JButton dibujarButton1;
+    private javax.swing.JButton dibujarButton2;
     private javax.swing.JButton eliminarLenguajeButton;
     private javax.swing.JButton estadosErButton1;
+    private javax.swing.JButton estadosErButton2;
     private javax.swing.JTextField estadosField1;
+    private javax.swing.JTextField estadosField2;
     private javax.swing.JButton estadosInButton1;
+    private javax.swing.JButton estadosInButton2;
     private javax.swing.JCheckBox finalCheck1;
+    private javax.swing.JCheckBox finalCheck2;
     private javax.swing.JButton ingresarLenguajeButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton lengTerminadoButton;
     private javax.swing.JComboBox<String> lenguajeCombo1;
+    private javax.swing.JComboBox<String> lenguajeCombo2;
     private javax.swing.JTextField lenguajeField;
     private javax.swing.JPanel lenguajePanel;
     private javax.swing.JList<String> listaEstados1;
+    private javax.swing.JList<String> listaEstados2;
     private javax.swing.JList<String> listaLenguaje;
     private javax.swing.JButton marcarInicialButton1;
+    private javax.swing.JButton marcarInicialButton2;
     private javax.swing.JButton setearTransicion1;
+    private javax.swing.JButton setearTransicion2;
     private javax.swing.JComboBox<String> transicionesCombo1;
+    private javax.swing.JComboBox<String> transicionesCombo2;
     // End of variables declaration//GEN-END:variables
 }
