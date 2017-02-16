@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  * @author Roberto Arriola
  */
 public class Dibujar extends JPanel{
-    private JFrame ventana= new JFrame("Automata");//Se crea un nuevo frame
+    JFrame ventana= new JFrame("Automata");//Se crea un nuevo frame
     private Automata automataPrueba=new Automata();
     private ArrayList<estadoG> estados=new ArrayList<>();
     /**
@@ -76,6 +76,8 @@ public class Dibujar extends JPanel{
                     }
                 }
                 calcularDimensiones();
+                repaint();
+                ventana.setVisible(true);//Hace visible todo el frame
     }
     /**
      * Método que genera las dimensiones de la ventana dependiendo del numero de estados

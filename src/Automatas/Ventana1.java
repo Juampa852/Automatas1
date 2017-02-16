@@ -35,8 +35,8 @@ public class Ventana1 extends javax.swing.JFrame {
     private String simboloT="";
     //private String simboloT2="";
     private boolean lengTerminado=false;
-    private Dibujar graficar;
-    private Dibujar graficar2;
+    private Dibujar graficar=null;
+    private Dibujar graficar2=null;
     private Equivalencias equi;
     /**
      * Creates new form Ventana1
@@ -790,8 +790,12 @@ public class Ventana1 extends javax.swing.JFrame {
 
     private void dibujarButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dibujarButton1ActionPerformed
         try {
-            if(automata1.isAFD())
+            if(automata1.isAFD())   
+            {   if(graficar==null)
                 graficar=new Dibujar(automata1);
+                else
+                    graficar.actualizar(automata1);
+            }
             else
                 JOptionPane.showMessageDialog(null, "Algo no esta bien aún\nPrueba colocar un estado como inicial o verificar las transiciones de cada estado");
         } catch (EstadoNoExiste|InterruptedException ex) {
@@ -890,7 +894,12 @@ public class Ventana1 extends javax.swing.JFrame {
     private void dibujarButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dibujarButton2ActionPerformed
         try {
             if(automata2.isAFD())
+            {
+                if(graficar2==null)
                 graficar2=new Dibujar(automata2);
+                else
+                    graficar.actualizar(automata2);
+            }
             else
                 JOptionPane.showMessageDialog(null, "Algo no esta bien aún\nPrueba colocar un estado como inicial o verificar las transiciones de cada estado");
         } catch (EstadoNoExiste|InterruptedException ex) {
@@ -910,8 +919,16 @@ public class Ventana1 extends javax.swing.JFrame {
     }//GEN-LAST:event_validarButton2ActionPerformed
 
     private void equivalentesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_equivalentesButtonActionPerformed
-        equi=new Equivalencias();
-        equi.Equivalentes(automata1, automata2);
+        try {
+            equi=new Equivalencias();
+            equi.Equivalentes(automata1, automata2);
+            if(equi.EstadosHijos(automata1.getEstado(automata1.getPocEstadoInicial()), automata2.getEstado(automata2.getPocEstadoInicial())))
+                JOptionPane.showMessageDialog(rootPane, "Son equivalentes");
+            else
+                JOptionPane.showMessageDialog(rootPane, "No son equivalentes");
+        } catch (EstadoNoExiste ex) {
+            Logger.getLogger(Ventana1.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_equivalentesButtonActionPerformed
     /**
      * Ingresa símbolos al lenguaje
