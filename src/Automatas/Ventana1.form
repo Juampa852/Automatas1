@@ -7,10 +7,8 @@
     <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
-    <SyntheticProperty name="formSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,-30,0,0,4,102"/>
-    <SyntheticProperty name="formSizePolicy" type="int" value="0"/>
-    <SyntheticProperty name="generateSize" type="boolean" value="true"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -56,7 +54,7 @@
               <Component id="equivalentesButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="automataPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="49" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -413,7 +411,7 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Guardar Transicion"/>
             <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="estadosField1"/>
+              <ComponentRef name="dibujarButton1"/>
             </Property>
           </Properties>
           <Events>
@@ -463,6 +461,9 @@
         <Component class="javax.swing.JButton" name="dibujarButton1">
           <Properties>
             <Property name="text" type="java.lang.String" value="Dibujar"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="validarArea1"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dibujarButton1ActionPerformed"/>
@@ -484,6 +485,9 @@
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
+                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                  <ComponentRef name="validarButton1"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="validarArea1KeyReleased"/>
@@ -494,6 +498,9 @@
         <Component class="javax.swing.JButton" name="validarButton1">
           <Properties>
             <Property name="text" type="java.lang.String" value="Validar"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="estadosField1"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="validarButton1ActionPerformed"/>
@@ -644,7 +651,7 @@
                   <StringArray count="0"/>
                 </Property>
                 <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="estadosInButton1"/>
+                  <ComponentRef name="estadosInButton2"/>
                 </Property>
               </Properties>
               <Events>
@@ -660,7 +667,7 @@
         <Component class="javax.swing.JTextField" name="estadosField2">
           <Properties>
             <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="finalCheck1"/>
+              <ComponentRef name="finalCheck2"/>
             </Property>
           </Properties>
           <Events>
@@ -688,7 +695,7 @@
             <Property name="text" type="java.lang.String" value="Eliminar Seleccionado"/>
             <Property name="name" type="java.lang.String" value="" noResource="true"/>
             <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="marcarInicialButton1"/>
+              <ComponentRef name="marcarInicialButton2"/>
             </Property>
           </Properties>
           <Events>
@@ -699,7 +706,7 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Final"/>
             <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="listaEstados1"/>
+              <ComponentRef name="listaEstados2"/>
             </Property>
           </Properties>
           <Events>
@@ -725,7 +732,7 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Guardar Transicion"/>
             <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="estadosField1"/>
+              <ComponentRef name="dibujarButton2"/>
             </Property>
           </Properties>
           <Events>
@@ -738,7 +745,7 @@
               <StringArray count="0"/>
             </Property>
             <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="setearTransicion1"/>
+              <ComponentRef name="setearTransicion2"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -749,7 +756,7 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Marcar Inicial"/>
             <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="lenguajeCombo1"/>
+              <ComponentRef name="lenguajeCombo2"/>
             </Property>
           </Properties>
           <Events>
@@ -761,8 +768,9 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
             </Property>
+            <Property name="name" type="java.lang.String" value="" noResource="true"/>
             <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="transicionesCombo1"/>
+              <ComponentRef name="transicionesCombo2"/>
             </Property>
           </Properties>
           <Events>
@@ -775,6 +783,9 @@
         <Component class="javax.swing.JButton" name="dibujarButton2">
           <Properties>
             <Property name="text" type="java.lang.String" value="Dibujar"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="validarArea2"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dibujarButton2ActionPerformed"/>
@@ -796,6 +807,9 @@
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
+                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                  <ComponentRef name="validarButton2"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="validarArea2KeyReleased"/>
@@ -806,6 +820,9 @@
         <Component class="javax.swing.JButton" name="validarButton2">
           <Properties>
             <Property name="text" type="java.lang.String" value="Validar"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="estadosField2"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="validarButton2ActionPerformed"/>
@@ -817,6 +834,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Comprobar Equivalencia"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="equivalentesButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

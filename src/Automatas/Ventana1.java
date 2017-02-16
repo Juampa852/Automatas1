@@ -26,14 +26,14 @@ public class Ventana1 extends javax.swing.JFrame {
     private Automata automata1=new Automata();
     private Automata automata2=new Automata();
     private EstadoCustomListModel estados = new EstadoCustomListModel();
-  private EstadoCustomListModel estados2 = new EstadoCustomListModel();
+    private EstadoCustomListModel estados2 = new EstadoCustomListModel();
     private TransicionesCustomListModel transiciones = new TransicionesCustomListModel();
     private TransicionesCustomListModel transiciones2 = new TransicionesCustomListModel();
     private LenguajeCustomListModel lenguaje = new LenguajeCustomListModel();
     private Estado temp=null;
     private Estado temp2=null;
     private String simboloT="";
-    private String simboloT2="";
+    //private String simboloT2="";
     private boolean lengTerminado=false;
     private Dibujar graficar;
     private Dibujar graficar2;
@@ -45,7 +45,9 @@ public class Ventana1 extends javax.swing.JFrame {
         initComponents();
         listaLenguaje.setModel(lenguaje);
         listaEstados1.setModel(estados);
+        listaEstados2.setModel(estados2);
         automataPanel1.setVisible(false);
+         equivalentesButton.setVisible(false);
         automataPanel2.setVisible(false);
     }
 
@@ -252,7 +254,7 @@ public class Ventana1 extends javax.swing.JFrame {
         jLabel5.setText("Estados:");
 
         setearTransicion1.setText("Guardar Transicion");
-        setearTransicion1.setNextFocusableComponent(estadosField1);
+        setearTransicion1.setNextFocusableComponent(dibujarButton1);
         setearTransicion1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 setearTransicion1ActionPerformed(evt);
@@ -277,6 +279,7 @@ public class Ventana1 extends javax.swing.JFrame {
         });
 
         dibujarButton1.setText("Dibujar");
+        dibujarButton1.setNextFocusableComponent(validarArea1);
         dibujarButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dibujarButton1ActionPerformed(evt);
@@ -287,6 +290,7 @@ public class Ventana1 extends javax.swing.JFrame {
 
         validarArea1.setColumns(20);
         validarArea1.setRows(5);
+        validarArea1.setNextFocusableComponent(validarButton1);
         validarArea1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 validarArea1KeyReleased(evt);
@@ -295,6 +299,7 @@ public class Ventana1 extends javax.swing.JFrame {
         jScrollPane4.setViewportView(validarArea1);
 
         validarButton1.setText("Validar");
+        validarButton1.setNextFocusableComponent(estadosField1);
         validarButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 validarButton1ActionPerformed(evt);
@@ -394,7 +399,7 @@ public class Ventana1 extends javax.swing.JFrame {
 
         automataPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Automata 2"));
 
-        listaEstados2.setNextFocusableComponent(estadosInButton1);
+        listaEstados2.setNextFocusableComponent(estadosInButton2);
         listaEstados2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 listaEstados2KeyReleased(evt);
@@ -407,7 +412,7 @@ public class Ventana1 extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(listaEstados2);
 
-        estadosField2.setNextFocusableComponent(finalCheck1);
+        estadosField2.setNextFocusableComponent(finalCheck2);
         estadosField2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 estadosField2KeyReleased(evt);
@@ -426,7 +431,7 @@ public class Ventana1 extends javax.swing.JFrame {
 
         estadosErButton2.setText("Eliminar Seleccionado");
         estadosErButton2.setName(""); // NOI18N
-        estadosErButton2.setNextFocusableComponent(marcarInicialButton1);
+        estadosErButton2.setNextFocusableComponent(marcarInicialButton2);
         estadosErButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 estadosErButton2ActionPerformed(evt);
@@ -434,7 +439,7 @@ public class Ventana1 extends javax.swing.JFrame {
         });
 
         finalCheck2.setText("Final");
-        finalCheck2.setNextFocusableComponent(listaEstados1);
+        finalCheck2.setNextFocusableComponent(listaEstados2);
         finalCheck2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 finalCheck2KeyReleased(evt);
@@ -448,24 +453,25 @@ public class Ventana1 extends javax.swing.JFrame {
         jLabel9.setText("Estados:");
 
         setearTransicion2.setText("Guardar Transicion");
-        setearTransicion2.setNextFocusableComponent(estadosField1);
+        setearTransicion2.setNextFocusableComponent(dibujarButton2);
         setearTransicion2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 setearTransicion2ActionPerformed(evt);
             }
         });
 
-        transicionesCombo2.setNextFocusableComponent(setearTransicion1);
+        transicionesCombo2.setNextFocusableComponent(setearTransicion2);
 
         marcarInicialButton2.setText("Marcar Inicial");
-        marcarInicialButton2.setNextFocusableComponent(lenguajeCombo1);
+        marcarInicialButton2.setNextFocusableComponent(lenguajeCombo2);
         marcarInicialButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 marcarInicialButton2ActionPerformed(evt);
             }
         });
 
-        lenguajeCombo2.setNextFocusableComponent(transicionesCombo1);
+        lenguajeCombo2.setName(""); // NOI18N
+        lenguajeCombo2.setNextFocusableComponent(transicionesCombo2);
         lenguajeCombo2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 lenguajeCombo2ItemStateChanged(evt);
@@ -473,6 +479,7 @@ public class Ventana1 extends javax.swing.JFrame {
         });
 
         dibujarButton2.setText("Dibujar");
+        dibujarButton2.setNextFocusableComponent(validarArea2);
         dibujarButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dibujarButton2ActionPerformed(evt);
@@ -483,6 +490,7 @@ public class Ventana1 extends javax.swing.JFrame {
 
         validarArea2.setColumns(20);
         validarArea2.setRows(5);
+        validarArea2.setNextFocusableComponent(validarButton2);
         validarArea2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 validarArea2KeyReleased(evt);
@@ -491,6 +499,7 @@ public class Ventana1 extends javax.swing.JFrame {
         jScrollPane5.setViewportView(validarArea2);
 
         validarButton2.setText("Validar");
+        validarButton2.setNextFocusableComponent(estadosField2);
         validarButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 validarButton2ActionPerformed(evt);
@@ -589,6 +598,11 @@ public class Ventana1 extends javax.swing.JFrame {
         );
 
         equivalentesButton.setText("Comprobar Equivalencia");
+        equivalentesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                equivalentesButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -618,11 +632,10 @@ public class Ventana1 extends javax.swing.JFrame {
                 .addComponent(equivalentesButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(automataPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(1126, 482));
-        setLocationRelativeTo(null);
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void ingresarLenguajeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarLenguajeButtonActionPerformed
@@ -687,6 +700,7 @@ public class Ventana1 extends javax.swing.JFrame {
                 lengTerminado=true;
                 lenguajePanel.setVisible(false);
                 automataPanel1.setVisible(true);
+                equivalentesButton.setVisible(true);
                 automataPanel2.setVisible(true);
                 estadosField1.requestFocus();
             }else{
@@ -775,12 +789,10 @@ public class Ventana1 extends javax.swing.JFrame {
 
     private void dibujarButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dibujarButton1ActionPerformed
         try {
-            if(automata1.isAFD()){
-                if(automata1.getPocEstadoInicial()!=-1)
-                    graficar=new Dibujar(automata1);
-                else
-                    JOptionPane.showMessageDialog(null, "No se puede dibujar, no hay un estado inicial", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            if(automata1.isAFD())
+                graficar=new Dibujar(automata1);
+            else
+                JOptionPane.showMessageDialog(null, "Algo no esta bien aún\nPrueba colocar un estado como inicial o verificar las transiciones de cada estado");
         } catch (EstadoNoExiste ex) {
             JOptionPane.showMessageDialog(null, ex.toString());
         }
@@ -800,18 +812,18 @@ public class Ventana1 extends javax.swing.JFrame {
     private void listaEstados2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listaEstados2KeyReleased
         int tecla=evt.getKeyCode();
         if(tecla==10){
-            eliminarEst1();
+            eliminarEst2();
         }
     }//GEN-LAST:event_listaEstados2KeyReleased
 
     private void listaEstados2ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaEstados2ValueChanged
-        int seleccion = listaEstados1.getSelectedIndex();
-        if (seleccion!=-1&&estados.getSize()>0) {
-            temp=estados.getEstado(seleccion);
+        int seleccion = listaEstados2.getSelectedIndex();
+        if (seleccion!=-1&&estados2.getSize()>0) {
+            temp2=estados2.getEstado(seleccion);
         }else
-            temp=null;
-        lenguajeCombo1.setSelectedIndex(-1);
-        transicionesCombo1.setSelectedIndex(-1);
+            temp2=null;
+        lenguajeCombo2.setSelectedIndex(-1);
+        transicionesCombo2.setSelectedIndex(-1);
     }//GEN-LAST:event_listaEstados2ValueChanged
 
     private void estadosField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_estadosField2KeyReleased
@@ -822,11 +834,11 @@ public class Ventana1 extends javax.swing.JFrame {
     }//GEN-LAST:event_estadosField2KeyReleased
 
     private void estadosInButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadosInButton2ActionPerformed
-        ingresarEst1();
+        ingresarEst2();
     }//GEN-LAST:event_estadosInButton2ActionPerformed
 
     private void estadosErButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadosErButton2ActionPerformed
-        eliminarEst1();
+        eliminarEst2();
     }//GEN-LAST:event_estadosErButton2ActionPerformed
 
     private void finalCheck2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_finalCheck2KeyReleased
@@ -838,12 +850,12 @@ public class Ventana1 extends javax.swing.JFrame {
 
     private void setearTransicion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setearTransicion2ActionPerformed
         try{
-            if((lenguajeCombo1.getSelectedIndex()!=-1)&&(transicionesCombo1.getSelectedIndex()!=-1)){
+            if((lenguajeCombo2.getSelectedIndex()!=-1)&&(transicionesCombo2.getSelectedIndex()!=-1)){
                 //Estado temporal=temp;
-                automata1.modificarTransicion(temp, lenguajeCombo1.getSelectedItem().toString().charAt(0),transicionesCombo1.getSelectedItem().toString());
-                estados.getEstado(listaEstados1.getSelectedIndex()).getTransiciones().get(lenguajeCombo1.getSelectedIndex()).setSiguiente(transicionesCombo1.getSelectedItem().toString());
-                lenguajeCombo1.setSelectedIndex(-1);
-                transicionesCombo1.setSelectedIndex(-1);
+                automata2.modificarTransicion(temp2, lenguajeCombo2.getSelectedItem().toString().charAt(0),transicionesCombo2.getSelectedItem().toString());
+                estados2.getEstado(listaEstados2.getSelectedIndex()).getTransiciones().get(lenguajeCombo2.getSelectedIndex()).setSiguiente(transicionesCombo2.getSelectedItem().toString());
+                lenguajeCombo2.setSelectedIndex(-1);
+                transicionesCombo2.setSelectedIndex(-1);
                 JOptionPane.showMessageDialog(null, "Guardado");
             }           
         } catch (TransicionNoExiste | EstadoNoExiste ex) {
@@ -853,8 +865,8 @@ public class Ventana1 extends javax.swing.JFrame {
 
     private void marcarInicialButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_marcarInicialButton2ActionPerformed
         try {
-            if(temp!=null)
-                automata1.marcarEstadoInicial(temp.getNombre());
+            if(temp2!=null)
+                automata2.marcarEstadoInicial(temp2.getNombre());
             JOptionPane.showMessageDialog(null, "Hecho");
         } catch (EstadoNoExiste ex) {
             JOptionPane.showMessageDialog(null, ex.toString());
@@ -862,26 +874,24 @@ public class Ventana1 extends javax.swing.JFrame {
     }//GEN-LAST:event_marcarInicialButton2ActionPerformed
 
     private void lenguajeCombo2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_lenguajeCombo2ItemStateChanged
-        int seleccion = lenguajeCombo1.getSelectedIndex();
-        if (seleccion!=-1&&lenguajeCombo1.getModel().getSize()>0) {
+        int seleccion = lenguajeCombo2.getSelectedIndex();
+        if (seleccion!=-1&&lenguajeCombo2.getModel().getSize()>0) {
             if(lengTerminado){
-                Transicion seleccionTran = estados.getEstado(listaEstados1.getSelectedIndex()).getTransiciones().get(seleccion);
+                Transicion seleccionTran = estados2.getEstado(listaEstados2.getSelectedIndex()).getTransiciones().get(seleccion);
                 if(!seleccionTran.getSiguiente().equals(""))
-                    transicionesCombo1.setSelectedItem(seleccionTran.getSiguiente());
+                    transicionesCombo2.setSelectedItem(seleccionTran.getSiguiente());
                 else
-                    transicionesCombo1.setSelectedIndex(-1);
+                    transicionesCombo2.setSelectedIndex(-1);
             }
         }
     }//GEN-LAST:event_lenguajeCombo2ItemStateChanged
 
     private void dibujarButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dibujarButton2ActionPerformed
         try {
-            if(automata1.isAFD()){
-                if(automata1.getPocEstadoInicial()!=-1)
-                    graficar=new Dibujar(automata1);
-                else
-                    JOptionPane.showMessageDialog(null, "No se puede dibujar, no hay un estado inicial", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            if(automata2.isAFD())
+                graficar2=new Dibujar(automata2);
+            else
+                JOptionPane.showMessageDialog(null, "Algo no esta bien aún\nPrueba colocar un estado como inicial o verificar las transiciones de cada estado");
         } catch (EstadoNoExiste ex) {
             JOptionPane.showMessageDialog(null, ex.toString());
         }
@@ -890,13 +900,17 @@ public class Ventana1 extends javax.swing.JFrame {
     private void validarArea2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_validarArea2KeyReleased
         int tecla=evt.getKeyCode();
         if(tecla==10){
-            validarCadena1();
+            validarCadena2();
         }
     }//GEN-LAST:event_validarArea2KeyReleased
 
     private void validarButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validarButton2ActionPerformed
-        validarCadena1();
+        validarCadena2();
     }//GEN-LAST:event_validarButton2ActionPerformed
+
+    private void equivalentesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_equivalentesButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_equivalentesButtonActionPerformed
     /**
      * Ingresa símbolos al lenguaje
      */
