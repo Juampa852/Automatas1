@@ -49,6 +49,7 @@ public class Equivalencias {
         if(holis.buscar(p1.getNombre(),p2.getNombre()))//aca entramos y tomamos el nombre  y registramos los nodos iniciales en un nodo de la lista y buscamos si ya existen o no por el metodo buscar
             return true;
         else{
+            holis.agregarAlInicio(p1.getNombre(), p2.getNombre());
             if(p1.isFinal()!=p2.isFinal())// si los dos son finales continua con el ciclo si no de una retorna un false y dice que no son equivalentes
                 return false;
             else{
@@ -58,7 +59,7 @@ public class Equivalencias {
                         Estado b = auto1.getEstado(a);
                         String c = p2.getTransiciones().get(i).getSiguiente();
                         Estado d = auto2.getEstado(c);// en estas lineas se realiza la obtencion de las transiciones tanto del estado p1 o del automata 1 y del 2
-                       temp = temp&&(EstadosHijos(b,d)); //llamadda recursiva mediante la multiplicacion de numeros booleanos ya que de esta forma sabremos donde acabar el cilo para saber si ya termino la hora de evalucion y saber que ya son equivalentes o no 
+                        temp = temp&&(EstadosHijos(b,d)); //llamadda recursiva mediante la multiplicacion de numeros booleanos ya que de esta forma sabremos donde acabar el cilo para saber si ya termino la hora de evalucion y saber que ya son equivalentes o no 
                     } catch (EstadoNoExiste ex) {
                         Logger.getLogger(Equivalencias.class.getName()).log(Level.SEVERE, null, ex);
                     }
