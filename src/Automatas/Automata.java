@@ -17,7 +17,8 @@ public class Automata {
     //private Estado inicial=null;
     private ArrayList<Estado> estados=new ArrayList<>();
     private boolean estInicial=false;
-    private int pocEstInicial=-1;
+    private int pocEstInicial=ESTADO_INICIAL_DEFAULT;
+    public static final int ESTADO_INICIAL_DEFAULT=-1;
     public Automata() {}
     /**
      * Getter del lenguaje
@@ -91,17 +92,21 @@ public class Automata {
         }
         if(!existe)
             throw new EstadoNoExiste("Este estado no existe en el automata");
-        estados.remove(poc);
+        if (poc==pocEstInicial) {
+            pocEstInicial=ESTADO_INICIAL_DEFAULT;
+            estInicial=false;
+        }
         Estado temp;
         for (int i = 0; i < estados.size(); i++) {
             temp=estados.get(i);
-            for (int j = 0; j < 10; j++) {
+            for (int j = 0; j < temp.getTransiciones().size(); j++) {
                 Transicion tran=temp.getTransiciones().get(j);
                 if(tran.getSiguiente().equals(nombreBorrar)){
                     estados.get(i).getTransiciones().get(j).setSiguiente(Transicion.ESTADO_SIGUIENTE_VACIO);
                 }
             }
         }
+        estados.remove(poc);  
     }
     /**
      * Método para marcar el estado inicial del autómata, y establecer su posición
@@ -251,14 +256,34 @@ public class Automata {
         boolean es=true;
         for (int i = 0; i < estados.size(); i++) {
             est=estados.get(i);
+            if(est.getTransiciones().size()!=lenguaje.size()){
+                es=false;
+                break;
+            }
             for (int j = 0; j < lenguaje.size(); j++) {
-                if(est.getTransiciones().get(j).getLetra()==' '){
+                if(est.getTransiciones().get(j).getSiguiente().equals(Transicion.ESTADO_SIGUIENTE_VACIO)){
                     es=false;
                     break;
                 }
             }
         }
-        return es;
+        return (es&&estInicial);
+        
     }
-    
+    /**
+     * Modifica una transicion ya existente en el estado
+     * @param estado el estado al que se desea cambiarse la transicion
+     * @param tran la letra con la cual se hace la transicion
+     * @param siguiente el nombre del estado al cual se pasa
+     * @throws TransicionNoExiste en caso de que la transicion no exista
+     * @throws EstadoNoExiste en caso de que el estado al que quiere irse no existiera
+     */
+    public void modificarTransicion (Estado estado, char tran, String siguiente) throws TransicionNoExiste, EstadoNoExiste{
+        int posicion=estados.get(buscarEstado(estado.getNombre())).buscarTransicion(tran);
+        if(posicion==-1)
+            throw new TransicionNoExiste("No hay ninguna transicion con esta letra del alfabeto");
+        if(buscarEstado(siguiente)==-1)
+            throw new EstadoNoExiste("No hay ningun estado con ese nombre");
+        estados.get(buscarEstado(estado.getNombre())).getTransiciones().get(posicion).setSiguiente(siguiente);
+    }
 }
