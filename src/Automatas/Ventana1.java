@@ -445,6 +445,7 @@ public class Ventana1 extends javax.swing.JFrame {
                 estados.getEstado(listaEstados1.getSelectedIndex()).getTransiciones().get(lenguajeCombo1.getSelectedIndex()).setSiguiente(transicionesCombo1.getSelectedItem().toString());
                 lenguajeCombo1.setSelectedIndex(-1);
                 transicionesCombo1.setSelectedIndex(-1);
+                JOptionPane.showMessageDialog(null, "Guardado");
             }           
         } catch (TransicionNoExiste | EstadoNoExiste ex) {
             JOptionPane.showMessageDialog(null, ex.toString());
@@ -503,6 +504,7 @@ public class Ventana1 extends javax.swing.JFrame {
                 automata1.eliminarSimbolo(simboloT);
                 lenguaje.eliminarSimbolo(listaLenguaje.getSelectedIndex());
                 lenguajeCombo1.removeItem(simboloT);
+                simboloT=listaLenguaje.getSelectedValue();
                 lenguajeCombo1.setSelectedIndex(-1);
             }
         } catch (SimboloNoExiste ex) {
@@ -539,9 +541,11 @@ public class Ventana1 extends javax.swing.JFrame {
     private void eliminarEst1(){
         if(temp!=null){
             try {
+                int pos=automata1.getPocEstado(temp.getNombre());
                 automata1.eliminarEstado(temp);
-                estados.eliminarEstado(automata1.getPocEstado(temp.getNombre()));
+                estados.eliminarEstado(pos);
                 transicionesCombo1.removeItem(temp.getNombre());
+                temp=estados.getEstado(listaEstados1.getSelectedIndex());
                 transicionesCombo1.setSelectedIndex(-1);
                 transicionesCombo1.requestFocus();
             } catch (EstadoNoExiste ex) {
