@@ -9,6 +9,8 @@ import Excepciones.EstadoNoExiste;
 import Excepciones.EstadoYaExiste;
 import Excepciones.SimboloNoExiste;
 import Excepciones.SimboloYaExiste;
+import Excepciones.TransicionNoExiste;
+import Excepciones.TransicionYaExiste;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +28,7 @@ public class Ventana1 extends javax.swing.JFrame {
     private LenguajeCustomListModel lenguaje = new LenguajeCustomListModel();
     private Estado temp=null;
     private String simboloT="";
+    private boolean lengTerminado=false;
     /**
      * Creates new form Ventana1
      * Setea los modelos creados para manejo de cada tipo de dato a ingresar con JLists
@@ -34,11 +37,6 @@ public class Ventana1 extends javax.swing.JFrame {
         initComponents();
         listaLenguaje.setModel(lenguaje);
         listaEstados1.setModel(estados);
-        listaTransiciones1.setModel(transiciones);
-        //listaEstTransiciones1.setModel(estados);
-        //ComboBoxModel<Estado> comboEstados= new ComboBoxModel<>();
-        //transicionesCombo1.setModel();
-        listaTransiciones1.setModel(lenguaje);
         automataPanel1.setVisible(false);
     }
 
@@ -62,8 +60,6 @@ public class Ventana1 extends javax.swing.JFrame {
         automataPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaEstados1 = new javax.swing.JList<>();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        listaTransiciones1 = new javax.swing.JList<>();
         estadosField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         estadosInButton1 = new javax.swing.JButton();
@@ -72,9 +68,10 @@ public class Ventana1 extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        setearTransicion1 = new javax.swing.JButton();
         transicionesCombo1 = new javax.swing.JComboBox<>();
         marcarInicialButton1 = new javax.swing.JButton();
+        lenguajeCombo1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Automatas");
@@ -98,6 +95,11 @@ public class Ventana1 extends javax.swing.JFrame {
         });
 
         listaLenguaje.setNextFocusableComponent(eliminarLenguajeButton);
+        listaLenguaje.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                listaLenguajeKeyReleased(evt);
+            }
+        });
         listaLenguaje.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 listaLenguajeValueChanged(evt);
@@ -161,19 +163,18 @@ public class Ventana1 extends javax.swing.JFrame {
 
         automataPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Automata 1"));
 
+        listaEstados1.setNextFocusableComponent(estadosInButton1);
+        listaEstados1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                listaEstados1KeyReleased(evt);
+            }
+        });
         listaEstados1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 listaEstados1ValueChanged(evt);
             }
         });
         jScrollPane1.setViewportView(listaEstados1);
-
-        listaTransiciones1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                listaTransiciones1ValueChanged(evt);
-            }
-        });
-        jScrollPane3.setViewportView(listaTransiciones1);
 
         estadosField1.setNextFocusableComponent(finalCheck1);
         estadosField1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -193,7 +194,8 @@ public class Ventana1 extends javax.swing.JFrame {
         });
 
         estadosErButton1.setText("Eliminar Seleccionado");
-        estadosErButton1.setNextFocusableComponent(estadosField1);
+        estadosErButton1.setName(""); // NOI18N
+        estadosErButton1.setNextFocusableComponent(marcarInicialButton1);
         estadosErButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 estadosErButton1ActionPerformed(evt);
@@ -201,7 +203,7 @@ public class Ventana1 extends javax.swing.JFrame {
         });
 
         finalCheck1.setText("Final");
-        finalCheck1.setNextFocusableComponent(estadosInButton1);
+        finalCheck1.setNextFocusableComponent(listaEstados1);
         finalCheck1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 finalCheck1KeyReleased(evt);
@@ -214,17 +216,28 @@ public class Ventana1 extends javax.swing.JFrame {
 
         jLabel5.setText("Estados:");
 
-        jButton1.setText("Marcar Transicion");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        setearTransicion1.setText("Guardar Transicion");
+        setearTransicion1.setNextFocusableComponent(estadosField1);
+        setearTransicion1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                setearTransicion1ActionPerformed(evt);
             }
         });
 
+        transicionesCombo1.setNextFocusableComponent(setearTransicion1);
+
         marcarInicialButton1.setText("Marcar Inicial");
+        marcarInicialButton1.setNextFocusableComponent(lenguajeCombo1);
         marcarInicialButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 marcarInicialButton1ActionPerformed(evt);
+            }
+        });
+
+        lenguajeCombo1.setNextFocusableComponent(transicionesCombo1);
+        lenguajeCombo1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                lenguajeCombo1ItemStateChanged(evt);
             }
         });
 
@@ -252,21 +265,20 @@ public class Ventana1 extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(automataPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(automataPanel1Layout.createSequentialGroup()
-                                .addComponent(transicionesCombo1, 0, 148, Short.MAX_VALUE)
-                                .addContainerGap())
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lenguajeCombo1, 0, 129, Short.MAX_VALUE)
+                                    .addComponent(transicionesCombo1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(automataPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jButton1)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                .addGap(38, 38, 38)
+                                .addComponent(setearTransicion1)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         automataPanel1Layout.setVerticalGroup(
             automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,12 +286,14 @@ public class Ventana1 extends javax.swing.JFrame {
                 .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(automataPanel1Layout.createSequentialGroup()
                         .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(lenguajeCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(transicionesCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
-                    .addComponent(jLabel3)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(setearTransicion1))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(automataPanel1Layout.createSequentialGroup()
                         .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -305,7 +319,7 @@ public class Ventana1 extends javax.swing.JFrame {
                 .addComponent(lenguajePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(automataPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addContainerGap(202, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,7 +332,7 @@ public class Ventana1 extends javax.swing.JFrame {
                 .addContainerGap(237, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(1044, 480));
+        setSize(new java.awt.Dimension(988, 480));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -331,7 +345,7 @@ public class Ventana1 extends javax.swing.JFrame {
      */
     private void listaEstados1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaEstados1ValueChanged
         int seleccion = listaEstados1.getSelectedIndex();
-        if (seleccion!=-1) {
+        if (seleccion!=-1&&estados.getSize()>0) {
             temp=estados.getEstado(seleccion);
         }else
             temp=null;
@@ -342,7 +356,7 @@ public class Ventana1 extends javax.swing.JFrame {
      */
     private void listaLenguajeValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaLenguajeValueChanged
         int seleccion = listaLenguaje.getSelectedIndex();
-        if (seleccion!=-1) {
+        if (seleccion!=-1&&lenguaje.getSize()>0) {
             simboloT=lenguaje.getSimbolo(seleccion);
         }else
             simboloT="";
@@ -352,14 +366,7 @@ public class Ventana1 extends javax.swing.JFrame {
      * @param evt 
      */
     private void eliminarLenguajeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarLenguajeButtonActionPerformed
-        try{
-            if(!simboloT.equals("")){
-                automata1.eliminarSimbolo(simboloT);
-                lenguaje.eliminarSimbolo(listaLenguaje.getSelectedIndex());
-            }
-        } catch (SimboloNoExiste ex) {
-            JOptionPane.showMessageDialog(null, ex.toString());
-        }
+        eliminarLeng();
     }//GEN-LAST:event_eliminarLenguajeButtonActionPerformed
     /**
      * Accesibilidad, realiza acciones al presionar "Enter"
@@ -386,7 +393,7 @@ public class Ventana1 extends javax.swing.JFrame {
                 automata1.agregarEstado(eInicial);
                 automata1.marcarEstadoInicial(inicial);
                 estados.addEstado(eInicial);*/
-                
+                lengTerminado=true;
                 lenguajePanel.setVisible(false);
                 automataPanel1.setVisible(true);
                 estadosField1.requestFocus();
@@ -401,7 +408,7 @@ public class Ventana1 extends javax.swing.JFrame {
     }//GEN-LAST:event_lengTerminadoButtonActionPerformed
 
     private void estadosErButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadosErButton1ActionPerformed
-        
+        eliminarEst1();
     }//GEN-LAST:event_estadosErButton1ActionPerformed
 
     private void estadosInButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadosInButton1ActionPerformed
@@ -427,17 +434,47 @@ public class Ventana1 extends javax.swing.JFrame {
             if(temp!=null)
                 automata1.marcarEstadoInicial(temp.getNombre());
         } catch (EstadoNoExiste ex) {
-            JOptionPane.showMessageDialog(rootPane, ex.toString());
+            JOptionPane.showMessageDialog(null, ex.toString());
         }
     }//GEN-LAST:event_marcarInicialButton1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void setearTransicion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setearTransicion1ActionPerformed
+        try{
+            if((lenguajeCombo1.getSelectedIndex()!=-1)&&(transicionesCombo1.getSelectedIndex()!=-1)){
+                automata1.modificarTransicion(temp, lenguajeCombo1.getSelectedItem().toString().charAt(0),transicionesCombo1.getSelectedItem().toString());
+                estados.getEstado(listaEstados1.getSelectedIndex()).getTransiciones().get(lenguajeCombo1.getSelectedIndex()).setSiguiente(transicionesCombo1.getSelectedItem().toString());
+                lenguajeCombo1.setSelectedIndex(-1);
+                transicionesCombo1.setSelectedIndex(-1);
+            }           
+        } catch (TransicionNoExiste | EstadoNoExiste ex) {
+            JOptionPane.showMessageDialog(null, ex.toString());
+        }
+    }//GEN-LAST:event_setearTransicion1ActionPerformed
 
-    private void listaTransiciones1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaTransiciones1ValueChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_listaTransiciones1ValueChanged
+    private void listaLenguajeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listaLenguajeKeyReleased
+        int tecla=evt.getKeyCode();
+        if(tecla==10){
+            eliminarLeng();
+        }
+    }//GEN-LAST:event_listaLenguajeKeyReleased
+
+    private void listaEstados1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listaEstados1KeyReleased
+        int tecla=evt.getKeyCode();
+        if(tecla==10){
+            eliminarEst1();
+        }
+    }//GEN-LAST:event_listaEstados1KeyReleased
+
+    private void lenguajeCombo1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_lenguajeCombo1ItemStateChanged
+        int seleccion = lenguajeCombo1.getSelectedIndex();
+        if (seleccion!=-1&&lenguajeCombo1.getModel().getSize()>0) {
+            if(lengTerminado){
+                Transicion seleccionTran = estados.getEstado(listaEstados1.getSelectedIndex()).getTransiciones().get(seleccion);
+                transicionesCombo1.setSelectedItem(seleccionTran.getSiguiente());
+            }
+        }else
+            temp=null;
+    }//GEN-LAST:event_lenguajeCombo1ItemStateChanged
     /**
      * Ingresa símbolos al lenguaje
      */
@@ -446,6 +483,8 @@ public class Ventana1 extends javax.swing.JFrame {
             try {
                 automata1.agregarSimbolo(lenguajeField.getText().trim());
                 lenguaje.addSimbolo(lenguajeField.getText().trim());
+                lenguajeCombo1.addItem(lenguajeField.getText().trim());
+                lenguajeCombo1.setSelectedIndex(-1);
                 lenguajeField.setText("");
                 lenguajeField.requestFocus();
             } catch (SimboloYaExiste ex) {
@@ -455,11 +494,31 @@ public class Ventana1 extends javax.swing.JFrame {
             }
         }
     }
-    
+    /**
+     * Método para eliminar símbolos del lenguaje
+     */
+    private void eliminarLeng(){
+        try{
+            if(!simboloT.equals("")){
+                automata1.eliminarSimbolo(simboloT);
+                lenguaje.eliminarSimbolo(listaLenguaje.getSelectedIndex());
+                lenguajeCombo1.removeItem(simboloT);
+                lenguajeCombo1.setSelectedIndex(-1);
+            }
+        } catch (SimboloNoExiste ex) {
+            JOptionPane.showMessageDialog(null, ex.toString());
+        }
+    }
+    /**
+     * Método para ingresar estados al primer automata
+     */
     private void ingresarEst1(){
         if(!(estadosField1.getText().trim().equals(""))){
             try {
                 Estado nuevo= new Estado(estadosField1.getText().trim(), finalCheck1.isSelected());
+                for (int i = 0; i < lenguaje.getSize(); i++) {
+                    nuevo.agregarTransicion(lenguaje.getElementAt(i).toString().charAt(0));
+                }
                 automata1.agregarEstado(nuevo);
                 estados.addEstado(nuevo);
                 transicionesCombo1.addItem(nuevo.getNombre());
@@ -467,13 +526,28 @@ public class Ventana1 extends javax.swing.JFrame {
                 estadosField1.setText("");
                 finalCheck1.setSelected(false);
                 estadosField1.requestFocus();
-            } catch (EstadoYaExiste ex) {
+            } catch (EstadoYaExiste | TransicionYaExiste ex) {
                 JOptionPane.showMessageDialog(null, ex.toString());
                 estadosField1.selectAll();
                 estadosField1.requestFocus();
             }
         }
-        
+    }
+    /**
+     * Método para eliminar estados del primer autómata
+     */
+    private void eliminarEst1(){
+        if(temp!=null){
+            try {
+                automata1.eliminarEstado(temp);
+                estados.eliminarEstado(automata1.getPocEstado(temp.getNombre()));
+                transicionesCombo1.removeItem(temp.getNombre());
+                transicionesCombo1.setSelectedIndex(-1);
+                transicionesCombo1.requestFocus();
+            } catch (EstadoNoExiste ex) {
+                JOptionPane.showMessageDialog(null, ex.toString());
+            }
+        }
     }
     /**
      * @param args the command line arguments
@@ -518,7 +592,6 @@ public class Ventana1 extends javax.swing.JFrame {
     private javax.swing.JButton estadosInButton1;
     private javax.swing.JCheckBox finalCheck1;
     private javax.swing.JButton ingresarLenguajeButton;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -526,14 +599,14 @@ public class Ventana1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton lengTerminadoButton;
+    private javax.swing.JComboBox<String> lenguajeCombo1;
     private javax.swing.JTextField lenguajeField;
     private javax.swing.JPanel lenguajePanel;
     private javax.swing.JList<String> listaEstados1;
     private javax.swing.JList<String> listaLenguaje;
-    private javax.swing.JList<String> listaTransiciones1;
     private javax.swing.JButton marcarInicialButton1;
+    private javax.swing.JButton setearTransicion1;
     private javax.swing.JComboBox<String> transicionesCombo1;
     // End of variables declaration//GEN-END:variables
 }

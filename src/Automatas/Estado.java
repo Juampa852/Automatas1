@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Clase para controlar las caracteristicas del estado de un automata
  * @author juampa
  */
-public class Estado {
+public class Estado{
     private String nombre="";
     private boolean esFinal=false;
     private ArrayList<Transicion> transiciones=new ArrayList<>();
@@ -56,6 +56,18 @@ public class Estado {
         if(buscarTransicion(tran)!=-1)
             throw new TransicionYaExiste("La transición con esta letra del alfabeto, ya existe en este estado");
         Transicion nuevo=new Transicion(tran);
+        transiciones.add(nuevo);
+    }
+    /**
+     * Agrega una transicion al estado
+     * @param siguiente nombre del estado siguiente
+     * @param tran la letra que se usará para ejecutar la nueva transicion
+     * @throws TransicionYaExiste en caso de que la transicion con esta letra ya exista, se lanza una excepción
+     */
+    public void agregarTransicion (String siguiente, char tran) throws TransicionYaExiste{
+        if(buscarTransicion(tran)!=-1)
+            throw new TransicionYaExiste("La transición con esta letra del alfabeto, ya existe en este estado");
+        Transicion nuevo=new Transicion(siguiente, tran);
         transiciones.add(nuevo);
     }
     /**
