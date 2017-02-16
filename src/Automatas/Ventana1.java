@@ -37,6 +37,7 @@ public class Ventana1 extends javax.swing.JFrame {
     private boolean lengTerminado=false;
     private Dibujar graficar;
     private Dibujar graficar2;
+    private Equivalencias equi;
     /**
      * Creates new form Ventana1
      * Setea los modelos creados para manejo de cada tipo de dato a ingresar con JLists
@@ -793,7 +794,7 @@ public class Ventana1 extends javax.swing.JFrame {
                 graficar=new Dibujar(automata1);
             else
                 JOptionPane.showMessageDialog(null, "Algo no esta bien aún\nPrueba colocar un estado como inicial o verificar las transiciones de cada estado");
-        } catch (EstadoNoExiste ex) {
+        } catch (EstadoNoExiste|InterruptedException ex) {
             JOptionPane.showMessageDialog(null, ex.toString());
         }
     }//GEN-LAST:event_dibujarButton1ActionPerformed
@@ -892,7 +893,7 @@ public class Ventana1 extends javax.swing.JFrame {
                 graficar2=new Dibujar(automata2);
             else
                 JOptionPane.showMessageDialog(null, "Algo no esta bien aún\nPrueba colocar un estado como inicial o verificar las transiciones de cada estado");
-        } catch (EstadoNoExiste ex) {
+        } catch (EstadoNoExiste|InterruptedException ex) {
             JOptionPane.showMessageDialog(null, ex.toString());
         }
     }//GEN-LAST:event_dibujarButton2ActionPerformed
@@ -909,7 +910,8 @@ public class Ventana1 extends javax.swing.JFrame {
     }//GEN-LAST:event_validarButton2ActionPerformed
 
     private void equivalentesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_equivalentesButtonActionPerformed
-        // TODO add your handling code here:
+        equi=new Equivalencias();
+        equi.Equivalentes(automata1, automata2);
     }//GEN-LAST:event_equivalentesButtonActionPerformed
     /**
      * Ingresa símbolos al lenguaje
