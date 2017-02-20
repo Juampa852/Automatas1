@@ -920,9 +920,8 @@ public class Ventana1 extends javax.swing.JFrame {
 
     private void equivalentesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_equivalentesButtonActionPerformed
         try {
-            equi=new Equivalencias();
-            equi.Equivalentes(automata1, automata2);
-            if(equi.EstadosHijos(automata1.getEstado(automata1.getPocEstadoInicial()), automata2.getEstado(automata2.getPocEstadoInicial())))
+            equi=new Equivalencias(automata1,automata2);
+            if(equi.EstadosHijos(automata1.getEstado(automata1.getPocEstadoInicial()), automata2.getEstado(automata2.getPocEstadoInicial()))==true)
                 JOptionPane.showMessageDialog(rootPane, "Son equivalentes");
             else
                 JOptionPane.showMessageDialog(rootPane, "No son equivalentes");
