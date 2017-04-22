@@ -5,6 +5,7 @@
  */
 package Automatas;
 import Excepciones.*;
+import java.awt.List;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,18 @@ public class Automata {
     private boolean estInicial=false;
     private int pocEstInicial=ESTADO_INICIAL_DEFAULT;
     public static final int ESTADO_INICIAL_DEFAULT=-1;
+    public static final String transicionVacia="ƛ";
+    /**
+     * Constructor para crear un nuevo AFD
+     */
     public Automata() {}
+    /**
+     * Constructor para crear un nuevo AFD a partir de una expresión regular
+     * @param RegEx expresión regualar desde la cual se generará el autómata
+     */
+    public Automata(String RegEx){
+        
+    }
     /**
      * Getter del lenguaje
      * @return array con los símbolos del lenguaje
@@ -216,7 +228,7 @@ public class Automata {
             Estado est=estados.get(pocEstInicial);
             while(cont<cadena.length()){
                 char letra=cadena.charAt(cont);
-                est=estados.get(buscarEstado(est.cambiarDeEstado(letra)));
+                est=estados.get(buscarEstado(est.cambiarDeEstado(new String()+letra)));
                 cont++;
             }
             return est.isFinal();
@@ -278,12 +290,39 @@ public class Automata {
      * @throws TransicionNoExiste en caso de que la transicion no exista
      * @throws EstadoNoExiste en caso de que el estado al que quiere irse no existiera
      */
-    public void modificarTransicion (Estado estado, char tran, String siguiente) throws TransicionNoExiste, EstadoNoExiste{
+    public void modificarTransicion (Estado estado, String tran, String siguiente) throws TransicionNoExiste, EstadoNoExiste{
         int posicion=estados.get(buscarEstado(estado.getNombre())).buscarTransicion(tran);
         if(posicion==-1)
             throw new TransicionNoExiste("No hay ninguna transicion con esta letra del alfabeto");
         if(buscarEstado(siguiente)==-1)
             throw new EstadoNoExiste("No hay ningun estado con ese nombre");
         estados.get(buscarEstado(estado.getNombre())).getTransiciones().get(posicion).setSiguiente(siguiente);
+    }
+    
+    public void ERhaciaAFND(String ER) throws Excepcion{
+        ArrayList<Integer> abrir,cerrar,mas,asterisco, especial;
+        abrir = new ArrayList<>();
+        cerrar = new ArrayList<>();
+        mas = new ArrayList<>();
+        asterisco = new ArrayList<>();
+        especial = new ArrayList<>();
+        for (int i = 0; i < ER.length(); i++) {
+            char caract=ER.charAt(i);
+            if(caract=='(')
+                abrir.add(i);
+            if(caract==')')
+                cerrar.add(i);
+            if(caract=='+')
+                mas.add(i);
+            if(caract=='*')
+                asterisco.add(i);
+            if(caract=='\\')
+                especial.add(i);
+            if(!lenguaje.contains(new String()+caract))
+                throw new Excepcion("Hay caracteres que no pertenecen al lenguaje");
+        }
+        if(abrir.size()!=cerrar.size())
+            throw new Excepcion ("Formato invalido");
+        
     }
 }

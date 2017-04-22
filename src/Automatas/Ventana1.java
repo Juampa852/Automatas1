@@ -750,7 +750,7 @@ public class Ventana1 extends javax.swing.JFrame {
         try{
             if((lenguajeCombo1.getSelectedIndex()!=-1)&&(transicionesCombo1.getSelectedIndex()!=-1)){
                 //Estado temporal=temp;
-                automata1.modificarTransicion(temp, lenguajeCombo1.getSelectedItem().toString().charAt(0),transicionesCombo1.getSelectedItem().toString());
+                automata1.modificarTransicion(temp, new String()+lenguajeCombo1.getSelectedItem().toString().charAt(0),transicionesCombo1.getSelectedItem().toString());
                 estados.getEstado(listaEstados1.getSelectedIndex()).getTransiciones().get(lenguajeCombo1.getSelectedIndex()).setSiguiente(transicionesCombo1.getSelectedItem().toString());
                 lenguajeCombo1.setSelectedIndex(-1);
                 transicionesCombo1.setSelectedIndex(-1);
@@ -857,7 +857,7 @@ public class Ventana1 extends javax.swing.JFrame {
         try{
             if((lenguajeCombo2.getSelectedIndex()!=-1)&&(transicionesCombo2.getSelectedIndex()!=-1)){
                 //Estado temporal=temp;
-                automata2.modificarTransicion(temp2, lenguajeCombo2.getSelectedItem().toString().charAt(0),transicionesCombo2.getSelectedItem().toString());
+                automata2.modificarTransicion(temp2, new String()+lenguajeCombo2.getSelectedItem().toString().charAt(0),transicionesCombo2.getSelectedItem().toString());
                 estados2.getEstado(listaEstados2.getSelectedIndex()).getTransiciones().get(lenguajeCombo2.getSelectedIndex()).setSiguiente(transicionesCombo2.getSelectedItem().toString());
                 lenguajeCombo2.setSelectedIndex(-1);
                 transicionesCombo2.setSelectedIndex(-1);
@@ -977,7 +977,7 @@ public class Ventana1 extends javax.swing.JFrame {
             try {
                 Estado nuevo= new Estado(estadosField1.getText().trim(), finalCheck1.isSelected());
                 for (int i = 0; i < lenguaje.getSize(); i++) {
-                    nuevo.agregarTransicion(lenguaje.getElementAt(i).toString().charAt(0));
+                    nuevo.agregarTransicion(new String()+lenguaje.getElementAt(i).toString().charAt(0));
                 }
                 automata1.agregarEstado(nuevo);
                 estados.addEstado(nuevo);
@@ -1036,7 +1036,7 @@ public class Ventana1 extends javax.swing.JFrame {
             try {
                 Estado nuevo= new Estado(estadosField2.getText().trim(), finalCheck2.isSelected());
                 for (int i = 0; i < lenguaje.getSize(); i++) {
-                    nuevo.agregarTransicion(lenguaje.getElementAt(i).toString().charAt(0));
+                    nuevo.agregarTransicion(new String()+lenguaje.getElementAt(i).toString().charAt(0));
                 }
                 automata2.agregarEstado(nuevo);
                 estados2.addEstado(nuevo);
