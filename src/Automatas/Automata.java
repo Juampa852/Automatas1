@@ -222,14 +222,17 @@ public class Automata {
      * @param cadena cadena a validar
      * @return true si la cadena pertenece al lenguaje, false si no
      */
-    public boolean comprobarCadena(String cadena) throws NoEsAFD{
+    public boolean comprobarCadena(String cadena) throws NoEsAFD, Excepcion{
         if(isAFD()){
             int cont=0;
             Estado est=estados.get(pocEstInicial);
             while(cont<cadena.length()){
                 char letra=cadena.charAt(cont);
-                est=estados.get(buscarEstado(est.cambiarDeEstado(new String()+letra)));
-                cont++;
+                if(lenguaje.contains(new String()+letra)){
+                    est=estados.get(buscarEstado(est.cambiarDeEstado(new String()+letra)));
+                    cont++;
+                }else
+                    throw new Excepcion ("Hay caracteres que no pertenecen al alfabeto");
             }
             return est.isFinal();
         }else

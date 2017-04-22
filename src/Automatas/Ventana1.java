@@ -5,13 +5,7 @@
  */
 package Automatas;
 
-import Excepciones.EstadoNoExiste;
-import Excepciones.EstadoYaExiste;
-import Excepciones.NoEsAFD;
-import Excepciones.SimboloNoExiste;
-import Excepciones.SimboloYaExiste;
-import Excepciones.TransicionNoExiste;
-import Excepciones.TransicionYaExiste;
+import Excepciones.*;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -811,6 +805,7 @@ public class Ventana1 extends javax.swing.JFrame {
         int tecla=evt.getKeyCode();
         if(tecla==10){
             validarCadena1();
+            validarArea1.setText(validarArea1.getText().substring(0, validarArea1.getText().length()-2));
         }
     }//GEN-LAST:event_validarArea1KeyReleased
 
@@ -911,6 +906,7 @@ public class Ventana1 extends javax.swing.JFrame {
         int tecla=evt.getKeyCode();
         if(tecla==10){
             validarCadena2();
+            validarArea2.setText(validarArea2.getText().substring(0, validarArea2.getText().length()-2));
         }
     }//GEN-LAST:event_validarArea2KeyReleased
 
@@ -1023,7 +1019,7 @@ public class Ventana1 extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "La cadena NO es valida", "Información",JOptionPane.WARNING_MESSAGE);
                 validarArea1.selectAll();
                 validarArea1.requestFocus();
-            } catch (NoEsAFD ex) {
+            } catch (NoEsAFD|Excepcion ex) {
                 JOptionPane.showMessageDialog(null, ex.toString());
             }
         }
@@ -1082,7 +1078,7 @@ public class Ventana1 extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "La cadena NO es valida", "Información",JOptionPane.WARNING_MESSAGE);
                 validarArea2.selectAll();
                 validarArea2.requestFocus();
-            } catch (NoEsAFD ex) {
+            } catch (NoEsAFD|Excepcion ex) {
                 JOptionPane.showMessageDialog(null, ex.toString());
             }
         }
