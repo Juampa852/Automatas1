@@ -920,7 +920,7 @@ public class Ventana1 extends javax.swing.JFrame {
             if(equi.EstadosHijos(automata1.getEstado(automata1.getPocEstadoInicial()), automata2.getEstado(automata2.getPocEstadoInicial()))==true)
                 JOptionPane.showMessageDialog(rootPane, "Son equivalentes");
             else
-                JOptionPane.showMessageDialog(rootPane, "No son equivalentes");
+                JOptionPane.showMessageDialog(rootPane, "No son equivalentes","No es equivalente", JOptionPane.ERROR_MESSAGE);
         } catch (EstadoNoExiste ex) {
             Logger.getLogger(Ventana1.class.getName()).log(Level.SEVERE, null, ex);
         }
