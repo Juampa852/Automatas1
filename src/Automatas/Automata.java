@@ -8,6 +8,8 @@ import Excepciones.*;
 import java.awt.List;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Clase para generar un autómata, con sus respectivas caracteristicas
@@ -20,7 +22,7 @@ public class Automata {
     private boolean estInicial=false;
     private int pocEstInicial=ESTADO_INICIAL_DEFAULT;
     public static final int ESTADO_INICIAL_DEFAULT=-1;
-    public static final String transicionVacia="ƛ";
+    public static final String TRANSICION_VACIA="ε";
     /**
      * Constructor para crear un nuevo AFD
      */
@@ -28,9 +30,14 @@ public class Automata {
     /**
      * Constructor para crear un nuevo AFD a partir de una expresión regular
      * @param RegEx expresión regualar desde la cual se generará el autómata
+     * @throws java.lang.Exception cualquier excepcion que pudiera darse
      */
-    public Automata(String RegEx){
-        
+    public Automata(String RegEx) throws Exception{
+        try {
+            ERhaciaAFND(RegEx);
+        } catch (Excepcion ex) {
+            throw new Excepcion(ex.toString());
+        }
     }
     /**
      * Getter del lenguaje
@@ -232,7 +239,7 @@ public class Automata {
                     est=estados.get(buscarEstado(est.cambiarDeEstado(new String()+letra)));
                     cont++;
                 }else
-                    throw new Excepcion ("Hay caracteres que no pertenecen al alfabeto");
+                    throw new Excepcion ("Hay caracteres que no pertenecen al lenguaje");
             }
             return est.isFinal();
         }else
@@ -326,6 +333,24 @@ public class Automata {
         }
         if(abrir.size()!=cerrar.size())
             throw new Excepcion ("Formato invalido");
-        
+        if(!abrir.isEmpty()){
+            ArrayList<int[]> pares= new ArrayList<>();
+            for (int i = 0;  i< cerrar.size(); i++) {
+                int cerrarAct=cerrar.get(i);
+                for (int j = abrir.size(); j >0; j--) {
+                    int abrirAct=abrir.get(j);
+                    if(cerrarAct<abrirAct){
+                        int[] temp={abrirAct,cerrarAct};
+                        pares.add(temp);
+                        abrir.remove(j);
+                        break;
+                    }
+                }
+            }
+            if(pares.size()!=cerrar.size())
+                throw new Excepcion ("Formato invalido");
+            
+            
+        }
     }
 }
