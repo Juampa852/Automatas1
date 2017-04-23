@@ -17,7 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.JOptionPane;
-
+import AFD_REGEX.ExpresionRegular;
 /**
  *
  * @author juampa
@@ -38,6 +38,7 @@ public class Ventana1 extends javax.swing.JFrame {
     private Dibujar graficar=null;
     private Dibujar graficar2=null;
     private Equivalencias equi;
+    private ExpresionRegular regex=new ExpresionRegular();
     /**
      * Creates new form Ventana1
      * Setea los modelos creados para manejo de cada tipo de dato a ingresar con JLists
@@ -89,6 +90,10 @@ public class Ventana1 extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         validarArea1 = new javax.swing.JTextArea();
         validarButton1 = new javax.swing.JButton();
+        generarBTN = new javax.swing.JButton();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        regexAREA = new javax.swing.JTextArea();
+        jLabel13 = new javax.swing.JLabel();
         automataPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         listaEstados2 = new javax.swing.JList<>();
@@ -109,6 +114,10 @@ public class Ventana1 extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         validarArea2 = new javax.swing.JTextArea();
         validarButton2 = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        regexAREA2 = new javax.swing.JTextArea();
+        generarBTN2 = new javax.swing.JButton();
         equivalentesButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -307,6 +316,19 @@ public class Ventana1 extends javax.swing.JFrame {
             }
         });
 
+        generarBTN.setText("Generar");
+        generarBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generarBTNActionPerformed(evt);
+            }
+        });
+
+        regexAREA.setColumns(20);
+        regexAREA.setRows(5);
+        jScrollPane7.setViewportView(regexAREA);
+
+        jLabel13.setText("Expresion");
+
         javax.swing.GroupLayout automataPanel1Layout = new javax.swing.GroupLayout(automataPanel1);
         automataPanel1.setLayout(automataPanel1Layout);
         automataPanel1Layout.setHorizontalGroup(
@@ -350,11 +372,19 @@ public class Ventana1 extends javax.swing.JFrame {
                         .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(102, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, automataPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(validarButton1)
                         .addGap(90, 90, 90))))
+            .addGroup(automataPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel13)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(generarBTN)
+                .addGap(146, 146, 146))
         );
         automataPanel1Layout.setVerticalGroup(
             automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -381,6 +411,10 @@ public class Ventana1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(validarButton1))
                     .addGroup(automataPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(marcarInicialButton1))
+                    .addGroup(automataPanel1Layout.createSequentialGroup()
                         .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(estadosField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -390,12 +424,17 @@ public class Ventana1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(estadosInButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(estadosErButton1))
-                    .addGroup(automataPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(marcarInicialButton1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(estadosErButton1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, automataPanel1Layout.createSequentialGroup()
+                        .addGroup(automataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(generarBTN)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, automataPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addGap(20, 20, 20))))
         );
 
         automataPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Automata 2"));
@@ -507,6 +546,19 @@ public class Ventana1 extends javax.swing.JFrame {
             }
         });
 
+        jLabel14.setText("Expresion");
+
+        regexAREA2.setColumns(20);
+        regexAREA2.setRows(5);
+        jScrollPane8.setViewportView(regexAREA2);
+
+        generarBTN2.setText("Generar");
+        generarBTN2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generarBTN2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout automataPanel2Layout = new javax.swing.GroupLayout(automataPanel2);
         automataPanel2.setLayout(automataPanel2Layout);
         automataPanel2Layout.setHorizontalGroup(
@@ -555,6 +607,14 @@ public class Ventana1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(validarButton2)
                         .addGap(90, 90, 90))))
+            .addGroup(automataPanel2Layout.createSequentialGroup()
+                .addContainerGap(98, Short.MAX_VALUE)
+                .addComponent(jLabel14)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(generarBTN2)
+                .addGap(146, 146, 146))
         );
         automataPanel2Layout.setVerticalGroup(
             automataPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -595,6 +655,13 @@ public class Ventana1 extends javax.swing.JFrame {
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(marcarInicialButton2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(automataPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(generarBTN2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, automataPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addGap(9, 9, 9)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -632,8 +699,7 @@ public class Ventana1 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(equivalentesButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(automataPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addComponent(automataPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -799,7 +865,7 @@ public class Ventana1 extends javax.swing.JFrame {
             else
                 JOptionPane.showMessageDialog(null, "Algo no esta bien aún\nPrueba colocar un estado como inicial o verificar las transiciones de cada estado");
         } catch (EstadoNoExiste|InterruptedException ex) {
-            JOptionPane.showMessageDialog(null, ex.toString());
+            
         }
     }//GEN-LAST:event_dibujarButton1ActionPerformed
 
@@ -929,6 +995,34 @@ public class Ventana1 extends javax.swing.JFrame {
             Logger.getLogger(Ventana1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_equivalentesButtonActionPerformed
+
+    private void generarBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarBTNActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (automata1.isAFD()) {
+                regexAREA.setText(regex.generarExpresion(automata1));
+            } 
+            else {
+                JOptionPane.showMessageDialog(null, "Algo no esta bien aún\nPrueba colocar un estado como inicial o verificar las transiciones de cada estado");
+            }
+        } catch (EstadoNoExiste ex) {
+                
+        }
+    }//GEN-LAST:event_generarBTNActionPerformed
+
+    private void generarBTN2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarBTN2ActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (automata2.isAFD()) {
+                regexAREA2.setText(regex.generarExpresion(automata2));
+            } 
+            else {
+                JOptionPane.showMessageDialog(null, "Algo no esta bien aún\nPrueba colocar un estado como inicial o verificar las transiciones de cada estado");
+            }
+        } catch (EstadoNoExiste ex) {
+                
+        }
+    }//GEN-LAST:event_generarBTN2ActionPerformed
     /**
      * Ingresa símbolos al lenguaje
      */
@@ -1137,10 +1231,14 @@ public class Ventana1 extends javax.swing.JFrame {
     private javax.swing.JButton estadosInButton2;
     private javax.swing.JCheckBox finalCheck1;
     private javax.swing.JCheckBox finalCheck2;
+    private javax.swing.JButton generarBTN;
+    private javax.swing.JButton generarBTN2;
     private javax.swing.JButton ingresarLenguajeButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1154,6 +1252,8 @@ public class Ventana1 extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JButton lengTerminadoButton;
     private javax.swing.JComboBox<String> lenguajeCombo1;
     private javax.swing.JComboBox<String> lenguajeCombo2;
@@ -1164,6 +1264,8 @@ public class Ventana1 extends javax.swing.JFrame {
     private javax.swing.JList<String> listaLenguaje;
     private javax.swing.JButton marcarInicialButton1;
     private javax.swing.JButton marcarInicialButton2;
+    private javax.swing.JTextArea regexAREA;
+    private javax.swing.JTextArea regexAREA2;
     private javax.swing.JButton setearTransicion1;
     private javax.swing.JButton setearTransicion2;
     private javax.swing.JComboBox<String> transicionesCombo1;
