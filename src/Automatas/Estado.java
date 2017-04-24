@@ -126,4 +126,10 @@ public class Estado{
     public void setFinal(boolean cambio){
         this.esFinal=cambio;
     }
+    /**
+     * 
+     */
+    public void setTransiciones(ArrayList<Transicion> trans){
+        this.transiciones=trans;
+    }
 }

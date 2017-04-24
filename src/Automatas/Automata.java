@@ -8,6 +8,9 @@ import Excepciones.*;
 import java.awt.List;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -308,9 +311,13 @@ public class Automata {
             throw new EstadoNoExiste("No hay ningun estado con ese nombre");
         estados.get(buscarEstado(estado.getNombre())).getTransiciones().get(posicion).setSiguiente(siguiente);
     }
+    private ArrayList<int[]> pares;
+    private ArrayList<Integer> abrir,cerrar,mas,asterisco, especial;
+    private Estado inicio,fin;
+    private ArrayList<Estado> nuevos;
     
     public void ERhaciaAFND(String ER) throws Excepcion{
-        ArrayList<Integer> abrir,cerrar,mas,asterisco, especial;
+        pares= new ArrayList<>();
         abrir = new ArrayList<>();
         cerrar = new ArrayList<>();
         mas = new ArrayList<>();
@@ -318,6 +325,14 @@ public class Automata {
         especial = new ArrayList<>();
         for (int i = 0; i < ER.length(); i++) {
             char caract=ER.charAt(i);
+            if(caract=='\\'){
+                especial.add(i);
+                char temp=ER.charAt(i+1);
+                if(temp=='('||temp=='+'||temp==')'||temp=='*'||temp=='\\')
+                    i++;
+                else
+                    throw new Excepcion("Formato invalido");
+            }
             if(caract=='(')
                 abrir.add(i);
             if(caract==')')
@@ -326,15 +341,12 @@ public class Automata {
                 mas.add(i);
             if(caract=='*')
                 asterisco.add(i);
-            if(caract=='\\')
-                especial.add(i);
             if(!lenguaje.contains(new String()+caract))
                 throw new Excepcion("Hay caracteres que no pertenecen al lenguaje");
         }
         if(abrir.size()!=cerrar.size())
             throw new Excepcion ("Formato invalido");
         if(!abrir.isEmpty()){
-            ArrayList<int[]> pares= new ArrayList<>();
             for (int i = 0;  i< cerrar.size(); i++) {
                 int cerrarAct=cerrar.get(i);
                 for (int j = abrir.size(); j >0; j--) {
@@ -349,8 +361,88 @@ public class Automata {
             }
             if(pares.size()!=cerrar.size())
                 throw new Excepcion ("Formato invalido");
-            
-            
+        }
+        nuevos = new ArrayList<>();
+        inicio = new Estado("i");
+        fin= new Estado("F",true);
+        Estado siguiente=fin;
+        Estado anterior=inicio;
+        for (int i = 0; i < mas.size(); i++) {
+            int signo=mas.get(i);
+            boolean dentro=false;
+            for (int j = 0; j < pares.size(); j++) {
+                if(!(signo>pares.get(j)[0]&&signo<pares.get(j)[1]))
+                    dentro=true;
+            }
+            if(!dentro){
+                Estado nuevo= new Estado("s"+(nuevos.size()+1));
+                char ant=ER.charAt(signo-1);
+                if(ant=='*'){
+                    int t=signo-2;
+                    ant=ER.charAt(t);
+                    if(ant==')'){
+                        boolean par=false;
+                        int pos=0;
+                        for (int j = 0; j < pares.size(); j++) {
+                            if(pares.get(i)[1]==t){
+                                par=true;
+                                pos=i;
+                                break;
+                            }
+                        }
+                        if(par){
+                            Transicion n= new Transicion(siguiente.getNombre(), ER.substring(pares.get(pos)[0]+1,pares.get(pos)[1]-1));
+                            ArrayList<Transicion> tr= new ArrayList<>();
+                            tr.add(n);
+                            nuevo.setTransiciones(tr);
+                            nuevos.add(nuevo);
+                        }
+                    }else{
+                        t--;
+                        ant=ER.charAt(t);
+                        while(ant!='+'){
+                            t--;
+                            ant=ER.charAt(t);
+                        }
+                        Transicion n= new Transicion(siguiente.getNombre(), ER.substring(t++,signo--));
+                        ArrayList<Transicion> tr= new ArrayList<>();
+                        tr.add(n);
+                        nuevo.setTransiciones(tr);
+                        nuevos.add(nuevo);
+                    }
+                }
+            }
+        }
+        
+    }
+    private void split(Estado siguiente, Estado anterior,String ER){
+        for (int i = 0; i < ER.length(); i++) {
+            char caract=ER.charAt(i);
+            if(caract=='\\'){
+                char temp=ER.charAt(i+1);
+                if(temp=='('||temp=='+'||temp==')'||temp=='*'||temp=='\\'){
+                    Estado nuevo= new Estado("s"+(nuevos.size()+1));
+                }
+                    
+            }
+            else if(caract=='('){
+                
+            }
+            else if(caract==')'){
+                
+            }
+            else if(caract=='+'){
+                
+            }
+            else if(caract=='*'){
+
+            }
+            else{
+                Estado nuevo=new Estado("s"+(nuevos.size()+1));
+                Transicion n=new Transicion(new String()+caract);
+
+            }
+
         }
     }
 }
