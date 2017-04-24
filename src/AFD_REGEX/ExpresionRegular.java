@@ -85,7 +85,10 @@ public class ExpresionRegular {
             }
             System.out.println("*********************************");
         }
-        return ecuaciones.get(0).expresionEcuacion();
+        if(ecuaciones.size()>1)
+            return ecuaciones.get(0).expresionEcuacion();
+        else
+            return "No hay una expresion regular";
     }
     /**
      * Metodo recursivo que genera las ecuaciones para los estados si estos no se han añadido a registros

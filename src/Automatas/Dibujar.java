@@ -10,6 +10,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -22,7 +25,63 @@ import javax.swing.JPanel;
 public class Dibujar extends JPanel{
     JFrame ventana= new JFrame("Automata");//Se crea un nuevo frame
     private Automata automataPrueba=new Automata();
+    private boolean arrastrando=false;
+    private int xAnterior=0, yAnterior=0;
+    estadoG estadoArrastrado=null;
     private ArrayList<estadoG> estados=new ArrayList<>();
+    private MouseMotionListener mm= new MouseMotionListener() {
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            if(!arrastrando)
+            {
+                xAnterior=e.getX();
+                yAnterior=e.getY();
+                arrastrando=true;
+                estadoArrastrado=estaDentroDeCirculo(xAnterior, yAnterior);
+            }
+            else
+            {
+                if(estadoArrastrado!=null)
+                {
+                    estadoArrastrado.x=estadoArrastrado.x+(e.getX()-xAnterior);
+                    estadoArrastrado.y=estadoArrastrado.y+(e.getY()-yAnterior);
+                    xAnterior=e.getX();
+                    yAnterior=e.getY();
+                    repaint();
+                }
+            }
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            arrastrando=false;
+        }
+    };
+    private MouseListener ml= new MouseListener() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+ 
+        }
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+           
+        }
+    };
     /**
      * Constructor de la clase que dibuja el automata
      * Genera un arreglo de estados graficos marcando en la primera posicion el estado inicial
@@ -36,6 +95,8 @@ public class Dibujar extends JPanel{
             {
                 actualizar(auto);
                 this.setBackground(Color.WHITE);
+                ventana.addMouseListener(ml);
+                ventana.addMouseMotionListener(mm);
                 ventana.add(this);//Añade el lienzo al frame
                 ventana.setVisible(true);//Hace visible todo el frame
             }
@@ -126,10 +187,15 @@ public class Dibujar extends JPanel{
             g2d.drawLine(estG.x-30,estG.y+80, estG.x,estG.y+50);             
         }
         g2d.setColor(asignarColor(posicion));
-        g2d.drawOval(estG.x,estG.y,100,100);   
+        g2d.fillOval(estG.x,estG.y,100,100); 
+        g2d.setColor(Color.BLACK);
+        g2d.drawOval(estG.x,estG.y,100,100); 
         if(estG.est.isFinal())
-                g2d.drawOval(estG.x+10,estG.y+10,80,80);
+        {
+            g2d.drawOval(estG.x+10,estG.y+10,80,80);   
+        }
         g2d.drawChars(estG.est.getNombre().toCharArray(), 0,estG.est.getNombre().length() ,estG.x+50,estG.y+50);
+        g2d.setColor(asignarColor(posicion));
         if(estG.est.getTransiciones().size()>0)
         {
             for (Transicion trans : estG.est.getTransiciones()) {
@@ -139,8 +205,28 @@ public class Dibujar extends JPanel{
                 {
                     double angulo=Math.atan2(t.y-estG.y, t.x-estG.x);
                     g2d.drawLine(estG.x+50+(int)(Math.cos(angulo)*50), estG.y+50+(int)(Math.sin(angulo)*50), t.x+50-(int)(Math.cos(angulo)*50), t.y+50-(int)(Math.sin(angulo)*50));
-                    g2d.fillOval(t.x+50-(int)(Math.cos(angulo)*50)-3, t.y+50-(int)(Math.sin(angulo)*50)-3, 6, 6);
-                    g2d.drawChars(caracteres.toCharArray(),0,caracteres.length(), estG.x+50+(int)(Math.cos(angulo)*50)-5,estG.y+50+(int)(Math.sin(angulo)*50)-5);
+                    g2d.fillOval(t.x+50-(int)(Math.cos(angulo)*50)-3, t.y+50-(int)(Math.sin(angulo)*50)-3, 7, 7);
+                    double lx,ly,L,dx,dy;
+                    lx=t.x-estG.x-(Math.cos(angulo)*100);
+                    ly=t.y-estG.y-(Math.sin(angulo)*100);
+                    L=(Math.sqrt(Math.pow(lx, 2)+Math.pow(ly, 2)))/2;
+                    if(0<=Math.acos(angulo))
+                    {
+                        dx=(10+caracteres.length()*5)*Math.sin(angulo);
+                    }
+                    else
+                    {
+                        dx=10*Math.sin(angulo);
+                    }
+                    if(0<=Math.asin(angulo))
+                    {
+                        dy=15*Math.cos(angulo);
+                    }
+                    else
+                    {
+                        dy=10*Math.cos(angulo);
+                    }
+                    g2d.drawChars(caracteres.toCharArray(),0,caracteres.length(),estG.x+50+(int)((L+50)*Math.cos(angulo)+dx),estG.y+50+(int)((L+50)*Math.sin(angulo)+dy));
                 }
                 else
                 {
@@ -217,24 +303,35 @@ public class Dibujar extends JPanel{
         while(posicion>8)
         { posicion=posicion-9;}
         switch (posicion) {
+            //case 1:
+                //return Color.BLACK;
             case 1:
-                return Color.BLACK;
-            case 2:
                 return Color.CYAN;
-            case 3:
+            case 2:
                 return Color.GREEN;
-            case 4:
+            case 3:
                 return Color.MAGENTA;
-            case 5:
+            case 4:
                 return Color.ORANGE;
-            case 6:
+            case 5:
                 return Color.RED;
-            case 7:
+            case 6:
                 return Color.PINK;
-            case 8:
+            case 7:
                 return Color.YELLOW;
             default:
                 return Color.BLUE;
         }
+    }
+    private estadoG estaDentroDeCirculo(int mouseX, int mouseY)
+    {
+        for(estadoG estado: estados)
+        {
+            if(mouseX>=estado.x && mouseX<=estado.x+100 && mouseY>=estado.y && mouseY<=estado.y+100)
+            {
+                return estado;
+            }
+        }
+        return null;
     }
 }
