@@ -40,7 +40,7 @@ public class Estado{
     public int buscarTransicion(String letra){
         int poc=-1;
         for (int i = 0; i < transiciones.size(); i++) {
-            if (letra==transiciones.get(i).getLetra()) {
+            if (letra.equals(transiciones.get(i).getLetra())) {
                 poc=i;
                 break;
             }
@@ -133,7 +133,7 @@ public class Estado{
         if(letra.equals(Automata.TRANSICION_VACIA))
             vacios.add(this.nombre);
         for (int i = 0; i < transiciones.size(); i++) {
-            if (letra==transiciones.get(i).getLetra()) {
+            if (letra.equals(transiciones.get(i).getLetra())) {
                 poc=i;
                 vacios.add(transiciones.get(i).getSiguiente());
             }
