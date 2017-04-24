@@ -977,7 +977,7 @@ public class Ventana1 extends javax.swing.JFrame {
             try {
                 Estado nuevo= new Estado(estadosField1.getText().trim(), finalCheck1.isSelected());
                 for (int i = 0; i < lenguaje.getSize(); i++) {
-                    nuevo.agregarTransicion(lenguaje.getElementAt(i).toString().charAt(0));
+                    nuevo.agregarTransicion(new String()+lenguaje.getElementAt(i).toString().charAt(0));
                 }
                 automata1.agregarEstado(nuevo);
                 estados.addEstado(nuevo);
@@ -1036,7 +1036,7 @@ public class Ventana1 extends javax.swing.JFrame {
             try {
                 Estado nuevo= new Estado(estadosField2.getText().trim(), finalCheck2.isSelected());
                 for (int i = 0; i < lenguaje.getSize(); i++) {
-                    nuevo.agregarTransicion(lenguaje.getElementAt(i).toString().charAt(0));
+                    nuevo.agregarTransicion(new String()+lenguaje.getElementAt(i).toString().charAt(0));
                 }
                 automata2.agregarEstado(nuevo);
                 estados2.addEstado(nuevo);

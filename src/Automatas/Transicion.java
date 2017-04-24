@@ -10,7 +10,7 @@ package Automatas;
  * @author juampa
  */
 public class Transicion {
-    private char letra=' ';
+    private String letra=" ";
     private String siguiente=ESTADO_SIGUIENTE_VACIO;
     public static final String ESTADO_SIGUIENTE_VACIO="";
     /**
@@ -18,7 +18,7 @@ public class Transicion {
      * @param siguiente estado al que lleva
      * @param letra letra con la cual ejecuta la transición
      */
-    public Transicion(String siguiente, char letra){
+    public Transicion(String siguiente, String letra){
         this.siguiente=siguiente;
         this.letra=letra;
     }
@@ -26,14 +26,14 @@ public class Transicion {
      * Constructor de la transicion
      * @param letra la letra con la cual cambia de estado
      */
-    public Transicion(char letra){
+    public Transicion(String letra){
         this.letra=letra;
     }
     /**
      * Obtiene la letra con la cual se ejecuta la transicion
      * @return letra con la cual cambia de estado
      */
-    public char getLetra() {
+    public String getLetra() {
         return letra;
     }
     /**

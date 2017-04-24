@@ -15,10 +15,16 @@ import java.util.ArrayList;
 public class Automata {
     private ArrayList<String> lenguaje=new ArrayList<>();
     //private Estado inicial=null;
+     private ArrayList<AFNAFD> estaditos;
     private ArrayList<Estado> estados=new ArrayList<>();
+    private ArrayList<Estado> vacio= new ArrayList<>();
     private boolean estInicial=false;
     private int pocEstInicial=ESTADO_INICIAL_DEFAULT;
     public static final int ESTADO_INICIAL_DEFAULT=-1;
+    public static final String TRANSICION_VACIA="ε";
+    private Estado vacios = new Estado(); 
+   
+    private  ArrayList<ArrayList<String>> estados1 = new ArrayList<>();
     public Automata() {}
     /**
      * Getter del lenguaje
@@ -216,7 +222,7 @@ public class Automata {
             Estado est=estados.get(pocEstInicial);
             while(cont<cadena.length()){
                 char letra=cadena.charAt(cont);
-                est=estados.get(buscarEstado(est.cambiarDeEstado(letra)));
+                est=estados.get(buscarEstado(est.cambiarDeEstado(new String()+letra)));
                 cont++;
             }
             return est.isFinal();
@@ -279,11 +285,95 @@ public class Automata {
      * @throws EstadoNoExiste en caso de que el estado al que quiere irse no existiera
      */
     public void modificarTransicion (Estado estado, char tran, String siguiente) throws TransicionNoExiste, EstadoNoExiste{
-        int posicion=estados.get(buscarEstado(estado.getNombre())).buscarTransicion(tran);
+        int posicion=estados.get(buscarEstado(estado.getNombre())).buscarTransicion(new String()+tran);
         if(posicion==-1)
             throw new TransicionNoExiste("No hay ninguna transicion con esta letra del alfabeto");
         if(buscarEstado(siguiente)==-1)
             throw new EstadoNoExiste("No hay ningun estado con ese nombre");
         estados.get(buscarEstado(estado.getNombre())).getTransiciones().get(posicion).setSiguiente(siguiente);
+    }
+    public ArrayList<AFNAFD> conversionAFN(Automata afd){
+        String nueva = "", men = "";
+        ArrayList<String> orden = new ArrayList<>();
+        ArrayList<String> orden1 = new ArrayList<>(); 
+        estados1=new ArrayList<>();
+        try{
+            orden=estados.get(pocEstInicial).buscarTransiciones(TRANSICION_VACIA);
+            guardaEstadosnuevos(orden);
+            for (int i = 0; i < lenguaje.size(); i++) {
+                for (int j = 0; j < orden.size(); j++) {
+                    mover(lenguaje.get(i), getEstado(orden.get(j)));
+                }
+            }
+            for (int i = 0; i < orden.size(); i++) {
+                if(pocEstInicial!=i){
+                    orden1=getEstado(orden.get(i)).buscarTransiciones(Automata.TRANSICION_VACIA);
+                    orden.addAll(orden1);
+                    guardaEstadosnuevos(orden);
+                    for (int k = 0; k < lenguaje.size(); k++) {
+                        for (int j = 0; j < orden.size(); j++) {
+                            mover(lenguaje.get(k), getEstado(orden1.get(j)));
+                        }
+                    }
+                }
+            }
+        }catch(EstadoNoExiste ex){
+            
+        }
+        for (int i = 0; i < estaditos.size(); i++) {
+            for (int j = 0; j < estaditos.size(); j++) {
+                if(estaditos.get(i)==estaditos.get(j)){
+                    estaditos.set(i, estaditos.get(j));   
+                }
+                
+            }
+        }
+        
+        return estaditos; 
+   }
+   
+   public ArrayList<String> mover(String letra, Estado est){
+            // Transicion trans = new Transicion(letra);
+             //Transicion trans1 = new Transicion(est.toString());
+            // ArrayList<Transicion> transicionesnuevas=new ArrayList<>();
+             //ArrayList<Transicion> estadonuevo = new ArrayList<>();
+             //transicionesnuevas.add(trans);
+            // estadonuevo.add(trans1);
+            int cont =0;
+             estaditos = new ArrayList<AFNAFD>();
+            char letra1=letra.charAt(0);
+            ArrayList<String> temp= new ArrayList<>();
+            boolean siguiente=true;
+            while(siguiente){
+                int posicion=buscarEstado(est.cambiarDeEstado(new String()+letra));
+                if(posicion!=-1){
+                    est=estados.get(posicion);
+                    estaditos.add(new AFNAFD("N" + cont, temp));
+                    temp.add(est.getNombre());
+                }else
+                    siguiente=false;
+            }
+            guardaEstadosnuevos(temp);
+            return temp;
+    }
+    
+    public void guardaEstadosnuevos(ArrayList<String> cadena){
+        if(!estados1.isEmpty()){
+            for (int i = 0; i < estados1.size(); i++) {
+                //estados1.add(cadena);
+                boolean existe2=true;
+                for (int j = 0; j < cadena.size(); j++) {
+                    if(!estados1.get(i).contains(cadena.get(j))){
+                        existe2=false;
+                        break;
+                    }
+                }
+                if(!existe2&&(cadena.size()!=estados1.get(i).size())){
+                    estados1.add(cadena);
+                    break;
+                }
+            }
+        }else
+            estados1.add(cadena);
     }
 }

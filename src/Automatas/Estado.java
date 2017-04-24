@@ -37,7 +37,7 @@ public class Estado{
      * @param letra la letra con la se "ejecuta" la transicion
      * @return retorna "-1" si no se ha encontrado la transicion, de lo contrario devuelve la posicion en el array de la transicion buscada
      */
-    public int buscarTransicion(char letra){
+    public int buscarTransicion(String letra){
         int poc=-1;
         for (int i = 0; i < transiciones.size(); i++) {
             if (letra==transiciones.get(i).getLetra()) {
@@ -52,7 +52,7 @@ public class Estado{
      * @param tran la letra que se usará para ejecutar la nueva transicion
      * @throws TransicionYaExiste en caso de que la transicion con esta letra ya exista, se lanza una excepción
      */
-    public void agregarTransicion (char tran) throws TransicionYaExiste{
+    public void agregarTransicion (String tran) throws TransicionYaExiste{
         if(buscarTransicion(tran)!=-1)
             throw new TransicionYaExiste("La transición con esta letra del alfabeto, ya existe en este estado");
         Transicion nuevo=new Transicion(tran);
@@ -64,7 +64,7 @@ public class Estado{
      * @param tran la letra que se usará para ejecutar la nueva transicion
      * @throws TransicionYaExiste en caso de que la transicion con esta letra ya exista, se lanza una excepción
      */
-    public void agregarTransicion (String siguiente, char tran) throws TransicionYaExiste{
+    public void agregarTransicion (String siguiente, String tran) throws TransicionYaExiste{
         if(buscarTransicion(tran)!=-1)
             throw new TransicionYaExiste("La transición con esta letra del alfabeto, ya existe en este estado");
         Transicion nuevo=new Transicion(siguiente, tran);
@@ -75,7 +75,7 @@ public class Estado{
      * @param letra 
      * @throws TransicionNoExiste 
      */
-    public void eliminarTransicion(char letra) throws TransicionNoExiste{
+    public void eliminarTransicion(String letra) throws TransicionNoExiste{
         int posicion=buscarTransicion(letra);
         if(posicion==-1)
             throw new TransicionNoExiste("No hay ninguna transicion con esta letra del alfabeto");
@@ -107,7 +107,7 @@ public class Estado{
      * @param letra letra del alfabeto con la cual se cambia
      * @return el estado al que se traslada
      */
-    public String cambiarDeEstado(char letra){
+    public String cambiarDeEstado(String letra){
         Transicion tran = transiciones.get(buscarTransicion(letra));
         return  tran.getSiguiente();
         
@@ -125,5 +125,19 @@ public class Estado{
      */
     public void setFinal(boolean cambio){
         this.esFinal=cambio;
+    }
+    
+    public ArrayList<String> buscarTransiciones(String letra){
+        ArrayList<String> vacios = new ArrayList<>();
+        int poc=-1;
+        if(letra.equals(Automata.TRANSICION_VACIA))
+            vacios.add(this.nombre);
+        for (int i = 0; i < transiciones.size(); i++) {
+            if (letra==transiciones.get(i).getLetra()) {
+                poc=i;
+                vacios.add(transiciones.get(i).getSiguiente());
+            }
+        }
+        return vacios;
     }
 }
