@@ -93,7 +93,7 @@ public class Ecuacion{
                 if(terminos.get(i).getEstado().equals(nombre))
                 {
                     expresion=terminos.get(i).getRegex();
-                    if(expresion.charAt(0)!='(' || expresion.charAt(expresion.length()-1)!=')')
+                    if(expresion.charAt(0)!='(' && expresion.charAt(expresion.length()-1)!=')')
                         expresion="("+expresion+")";
                     expresion+="*";
                         
@@ -169,6 +169,7 @@ public class Ecuacion{
         }
         System.out.println("    ECUACION RESULTANTE "+this);
         agrupar();
+        lemaDeArden();
         System.out.println("    AGRUPADA "+this);
     }
     public String expresionEcuacion()
