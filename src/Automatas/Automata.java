@@ -15,10 +15,16 @@ import java.util.ArrayList;
 public class Automata {
     private ArrayList<String> lenguaje=new ArrayList<>();
     //private Estado inicial=null;
+     private ArrayList<AFNAFD> estaditos;
     private ArrayList<Estado> estados=new ArrayList<>();
+    private ArrayList<Estado> vacio= new ArrayList<>();
     private boolean estInicial=false;
     private int pocEstInicial=ESTADO_INICIAL_DEFAULT;
     public static final int ESTADO_INICIAL_DEFAULT=-1;
+    public static final String TRANSICION_VACIA="ε";
+    private Estado vacios = new Estado(); 
+   
+    private  ArrayList<ArrayList<String>> estados1 = new ArrayList<>();
     public Automata() {}
     /**
      * Getter del lenguaje
@@ -216,7 +222,7 @@ public class Automata {
             Estado est=estados.get(pocEstInicial);
             while(cont<cadena.length()){
                 char letra=cadena.charAt(cont);
-                est=estados.get(buscarEstado(est.cambiarDeEstado(letra)));
+                est=estados.get(buscarEstado(est.cambiarDeEstado(new String()+letra)));
                 cont++;
             }
             return est.isFinal();
@@ -279,11 +285,111 @@ public class Automata {
      * @throws EstadoNoExiste en caso de que el estado al que quiere irse no existiera
      */
     public void modificarTransicion (Estado estado, char tran, String siguiente) throws TransicionNoExiste, EstadoNoExiste{
-        int posicion=estados.get(buscarEstado(estado.getNombre())).buscarTransicion(tran);
+        int posicion=estados.get(buscarEstado(estado.getNombre())).buscarTransicion(new String()+tran);
         if(posicion==-1)
             throw new TransicionNoExiste("No hay ninguna transicion con esta letra del alfabeto");
         if(buscarEstado(siguiente)==-1)
             throw new EstadoNoExiste("No hay ningun estado con ese nombre");
         estados.get(buscarEstado(estado.getNombre())).getTransiciones().get(posicion).setSiguiente(siguiente);
+    }
+    /**
+     * Método para realizar la conversion de AFN a AFD 
+     * 
+     * @param afd recibe un automata finito no determinista para realizar y llamar a todos los métodos para poder realizar el metodo por subconjuntos
+     * @return un arraylist donde posee la tabla final del automata finito determinista 
+     */
+    public ArrayList<AFNAFD> conversionAFN(Automata afd){
+        String nueva = "", men = "";
+        ArrayList<String> orden = new ArrayList<>();//guarda estados nuevos que se van creando segun las funciones de mover y transiciones vacias
+        ArrayList<String> orden1 = new ArrayList<>();// guarda estados 
+        estados1=new ArrayList<>();
+        try{
+            orden=estados.get(pocEstInicial).buscarTransiciones(TRANSICION_VACIA); //lo hace con el estado encontrado de primero
+            guardaEstadosnuevos(orden);
+            for (int i = 0; i < lenguaje.size(); i++) {
+                for (int j = 0; j < orden.size(); j++) {
+                    mover(lenguaje.get(i), getEstado(orden.get(j)));
+                }
+            }
+            for (int i = 0; i < orden.size(); i++) { //itera con el que encontro y la cadena obtenida a su vez
+                if(pocEstInicial!=i){
+                    orden1=getEstado(orden.get(i)).buscarTransiciones(Automata.TRANSICION_VACIA);
+                    orden.addAll(orden1);
+                    guardaEstadosnuevos(orden);
+                    for (int k = 0; k < lenguaje.size(); k++) {
+                        for (int j = 0; j < orden.size(); j++) {
+                            mover(lenguaje.get(k), getEstado(orden1.get(j)));
+                        }
+                    }
+                }
+            }
+        }catch(EstadoNoExiste ex){
+            
+        }
+        for (int i = 0; i < estaditos.size(); i++) {
+            for (int j = 0; j < estaditos.size(); j++) {
+                if(estaditos.get(i)==estaditos.get(j)){
+                    estaditos.set(i, estaditos.get(j));   
+                }
+                
+            }
+        }
+        
+        return estaditos; 
+   }
+   /**
+    * Metodo encargado de poder con el estado nuevo creado poder ir a las transiciones de cada uno de los estados que 
+    * se fueron creando conforme al método de trans vacias 
+    * @param letra letra del alfabeto con la qué va
+    * @param est estado por analizar 
+    * @return 
+    */
+   public ArrayList<String> mover(String letra, Estado est){
+            // Transicion trans = new Transicion(letra);
+             //Transicion trans1 = new Transicion(est.toString());
+            // ArrayList<Transicion> transicionesnuevas=new ArrayList<>();
+             //ArrayList<Transicion> estadonuevo = new ArrayList<>();
+             //transicionesnuevas.add(trans);
+            // estadonuevo.add(trans1);
+            int cont =0;
+             estaditos = new ArrayList<AFNAFD>(); //ArrayList de la clase AFNAFD que es el constructor de la tabla final
+            char letra1=letra.charAt(0);
+            ArrayList<String> temp= new ArrayList<>();
+            boolean siguiente=true;
+            while(siguiente){ // ciclo que para ver a que estados se llega con la letra del alfabeto correspondiente
+                int posicion=buscarEstado(est.cambiarDeEstado(new String()+letra));
+                if(posicion!=-1){
+                    est=estados.get(posicion);
+                    estaditos.add(new AFNAFD("N" + cont, temp)); // se llama al constructor para la tabla final 
+                    temp.add(est.getNombre());
+                }else
+                    siguiente=false;
+            }
+            guardaEstadosnuevos(temp); // llamada a metodo de creacion de tabla intermedia
+            return temp;
+    }
+    /**
+     * metodo que se encarga de poder crear estados nuevos de la tabla intermedia y a la vez compara si existen ya en ella, 
+     * si existen no agrega, si no, los agrega
+     * @param cadena  obtenida en su llamado que posee el nombre de los estados a los que se accedieron para crear el grupo
+     */
+    public void guardaEstadosnuevos(ArrayList<String> cadena){
+        if(!estados1.isEmpty()){
+            for (int i = 0; i < estados1.size(); i++) {
+                //estados1.add(cadena);
+                boolean existe2=true;
+                for (int j = 0; j < cadena.size(); j++) {
+                    if(!estados1.get(i).contains(cadena.get(j))){
+                        existe2=false;
+                        break;
+                    }
+                }
+                if(!existe2&&(cadena.size()!=estados1.get(i).size())){
+                    estados1.add(cadena);
+                    break;
+                }
+            }
+        }else
+            estados1.add(cadena);
     }
 }
