@@ -205,13 +205,28 @@ public class Dibujar extends JPanel{
                 {
                     double angulo=Math.atan2(t.y-estG.y, t.x-estG.x);
                     g2d.drawLine(estG.x+50+(int)(Math.cos(angulo)*50), estG.y+50+(int)(Math.sin(angulo)*50), t.x+50-(int)(Math.cos(angulo)*50), t.y+50-(int)(Math.sin(angulo)*50));
-                    g2d.fillOval(t.x+50-(int)(Math.cos(angulo)*50)-3, t.y+50-(int)(Math.sin(angulo)*50)-3, 6, 6);
-                    double lx,ly,L;
-                    lx=t.x-(estG.x+50*Math.cos(angulo));
-                    ly= t.y-(estG.y+50*Math.sin(angulo));
+                    g2d.fillOval(t.x+50-(int)(Math.cos(angulo)*50)-3, t.y+50-(int)(Math.sin(angulo)*50)-3, 7, 7);
+                    double lx,ly,L,dx,dy;
+                    lx=t.x-estG.x-(Math.cos(angulo)*100);
+                    ly=t.y-estG.y-(Math.sin(angulo)*100);
                     L=(Math.sqrt(Math.pow(lx, 2)+Math.pow(ly, 2)))/2;
-  
-                    g2d.drawChars(caracteres.toCharArray(),0,caracteres.length(),estG.x+50+(int)(L*Math.cos(angulo)),estG.y+50+(int)((L*Math.sin(angulo))));
+                    if(0<=Math.acos(angulo))
+                    {
+                        dx=(10+caracteres.length()*5)*Math.sin(angulo);
+                    }
+                    else
+                    {
+                        dx=10*Math.sin(angulo);
+                    }
+                    if(0<=Math.asin(angulo))
+                    {
+                        dy=15*Math.cos(angulo);
+                    }
+                    else
+                    {
+                        dy=10*Math.cos(angulo);
+                    }
+                    g2d.drawChars(caracteres.toCharArray(),0,caracteres.length(),estG.x+50+(int)((L+50)*Math.cos(angulo)+dx),estG.y+50+(int)((L+50)*Math.sin(angulo)+dy));
                 }
                 else
                 {
